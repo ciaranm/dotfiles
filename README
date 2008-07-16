@@ -1,0 +1,8 @@
+README for dotfiles-ciaranm
+===========================
+
+This repository contains my vimrc, bashrc and so on. Steal all you want, and
+don't come crying to me when things break.
+
+.. vim: set spell spelllang=en tw=80 : ..
+

@@ -1,0 +1,13 @@
+Xcursor.theme: Vanilla-DMZ
+Xcursor.size: 24
+
+XTerm*.toolBar: false
+XTerm*.foreground: white
+XTerm*.background: black
+XTerm*.boldFont: -xos4-terminus-bold-r-normal--16-*-72-72-c-80-*
+XTerm*.font: -xos4-terminus-medium-r-normal--16-*-72-72-c-80-*
+XTerm*.multiScroll: true
+XTerm*.saveLines: 10000
+XTerm*.showBlinkAsBold: true
+XTerm*.utf8: 1
+XTerm*.visualBell: true
