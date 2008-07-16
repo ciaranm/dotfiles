@@ -3,7 +3,6 @@ CONFIGS = \
 	Xdefaults \
 	bashrc \
 	inkpot.vim \
-	procmailrc \
 	screenrc \
 	securemodelines.vim \
 	toprc \
