@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Tue 22 Jul 2008 19:40:44 BST
+" Most recent update: Tue 22 Jul 2008 19:54:14 BST
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -585,7 +585,7 @@ noremap  <S-Down> gj
 
 " <PageUp> and <PageDown> do silly things in normal mode with folds
 noremap <PageUp> <C-u>
-noremap <PageUp> <C-d>
+noremap <PageDown> <C-d>
 
 " Make <space> in normal mode go down a page rather than left a
 " character
