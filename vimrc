@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Tue 22 Jul 2008 19:54:14 BST
+" Most recent update: Wed 30 Jul 2008 20:04:22 BST
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -287,7 +287,12 @@ let &inc.=' ["<]'
 " Show tabs and trailing whitespace visually
 if (&termencoding == "utf-8") || has("gui_running")
     if v:version >= 700
-        set list listchars=tab:»·,trail:·,extends:…,nbsp:‗
+        if has("gui_running")
+            set list listchars=tab:»·,trail:·,extends:…,nbsp:‗
+        else
+            " xterm + terminus hates these
+            set list listchars=tab:»·,trail:·,extends:>,nbsp:_
+        endif
     else
         set list listchars=tab:»·,trail:·,extends:…
     endif
