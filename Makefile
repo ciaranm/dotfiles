@@ -6,7 +6,8 @@ CONFIGS = \
 	screenrc \
 	securemodelines.vim \
 	toprc \
-	vimrc
+	vimrc \
+	conkyrc-snowmobile
 
 default : all
 
@@ -23,6 +24,9 @@ install-file-inkpot.vim : inkpot.vim
 
 install-file-securemodelines.vim : securemodelines.vim
 	install $< $(HOME)/.vim/plugin/$<
+
+install-file-conkyrc-snowmobile : conkyrc-snowmobile
+	[[ `hostname` != 'snowmobile' ]] || install $< $(HOME)/.conkyrc
 
 install: $(foreach f, $(CONFIGS), install-file-$(f) )
 
