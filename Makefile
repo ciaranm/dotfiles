@@ -7,7 +7,8 @@ CONFIGS = \
 	securemodelines.vim \
 	toprc \
 	vimrc \
-	conkyrc-snowmobile
+	conkyrc-snowmobile \
+	conkyrc-snowcone
 
 default : all
 
@@ -27,6 +28,9 @@ install-file-securemodelines.vim : securemodelines.vim
 
 install-file-conkyrc-snowmobile : conkyrc-snowmobile
 	[[ `hostname` != 'snowmobile' ]] || install $< $(HOME)/.conkyrc
+
+install-file-conkyrc-snowcone : conkyrc-snowcone
+	[[ `hostname` != 'snowcone' ]] || install $< $(HOME)/.conkyrc
 
 install: $(foreach f, $(CONFIGS), install-file-$(f) )
 

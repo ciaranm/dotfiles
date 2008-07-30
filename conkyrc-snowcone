@@ -1,0 +1,89 @@
+alignment bottom_left
+double_buffer yes
+own_window no
+own_window_type desktop
+draw_borders yes
+draw_graph_borders yes
+update_interval 1
+use_xft 1
+own_window_transparent yes
+xftfont Terminus:size=7
+default_color grey90
+border_width 0
+gap_x 10
+gap_y 10
+mpd_host 127.0.0.1
+
+TEXT
+${color lightgoldenrod}System${color}
+  host   ${nodename} - ${machine}
+  up     ${uptime}
+  load   ${loadavg}
+
+${color lightgoldenrod}CPUs${color}
+  CPU1   ${cpugraph cpu1 20,200}
+         ${freq 0}MHz ${cpu cpu1}%
+  CPU2   ${cpugraph cpu2 20,200}
+         ${freq 1}MHz ${cpu cpu2}%
+  CPU3   ${cpugraph cpu3 20,200}
+         ${freq 2}MHz ${cpu cpu3}%
+  CPU4   ${cpugraph cpu4 20,200}
+         ${freq 3}MHz ${cpu cpu4}%
+
+${color lightgoldenrod}Memory${color}
+  RAM    ${membar 7,200}
+
+${color lightgoldenrod}Processes (CPU) ${color}
+  ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+  ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
+  ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
+  ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
+
+${color lightgoldenrod}Processes (RAM) ${color}
+  ${top_mem name 1} ${top_mem pid 1} ${top_mem mem 1}
+  ${top_mem name 2} ${top_mem pid 2} ${top_mem mem 2}
+  ${top_mem name 3} ${top_mem pid 3} ${top_mem mem 3}
+  ${top_mem name 4} ${top_mem pid 4} ${top_mem mem 4}
+
+${color lightgoldenrod}Filesystems${color}
+  /      ${fs_bar 7,200 /}
+  ~      ${fs_bar 7,200 /home}
+  /tmp   ${fs_bar 7,200 /tmp}
+  ~tmp   ${fs_bar 7,200 /home/users/ciaranm/tmp}
+
+${color lightgoldenrod}Disks${color}
+  sda    ${diskiograph_read /dev/sda 20,97} ${diskiograph_write /dev/sda 20,97}
+         ${hddtemp sda}
+  hda    ${diskiograph_read /dev/hda 20,97} ${diskiograph_write /dev/hda 20,97}
+         ${hddtemp hda}
+  hdb    ${diskiograph_read /dev/hdb 20,97} ${diskiograph_write /dev/hdb 20,97}
+         ${hddtemp hdb}
+  sr0    ${diskiograph_read /dev/sr0 20,97} ${diskiograph_write /dev/sr0 20,97}
+
+${color lightgoldenrod}Network${color}
+  eth1   ${downspeedgraph eth1 20,97} ${upspeedgraph eth1 20,97}
+         ${addrs eth1}
+  ra0    ${downspeedgraph ra0 20,97} ${upspeedgraph ra0 20,97}
+         ${addrs ra0} ${wireless_essid ra0} ${wireless_bitrate ra0} ${wireless_link_qual_perc ra0}%
+
+${color lightgoldenrod}Inbound Connections (${tcp_portmon 1 32767 count})${color}
+  ${tcp_portmon 1 32767 lservice 0} ${tab 20} ${tcp_portmon 1 32767 rhost 0}
+  ${tcp_portmon 1 32767 lservice 1} ${tab 20} ${tcp_portmon 1 32767 rhost 1}
+  ${tcp_portmon 1 32767 lservice 2} ${tab 20} ${tcp_portmon 1 32767 rhost 2}
+  ${tcp_portmon 1 32767 lservice 3} ${tab 20} ${tcp_portmon 1 32767 rhost 3}
+
+${color lightgoldenrod}Outbound Connections (${tcp_portmon 32768 61000 count})${color}
+  ${tcp_portmon 32768 61000 rservice 0} ${tab 20} ${tcp_portmon 32768 61000 rhost 0}
+  ${tcp_portmon 32768 61000 rservice 1} ${tab 20} ${tcp_portmon 32768 61000 rhost 1}
+  ${tcp_portmon 32768 61000 rservice 2} ${tab 20} ${tcp_portmon 32768 61000 rhost 2}
+  ${tcp_portmon 32768 61000 rservice 3} ${tab 20} ${tcp_portmon 32768 61000 rhost 3}
+
+${color lightgoldenrod}Apps ${color}
+  ccache ${execi 15 ccache -s | sed -n '2,3s/[^0-9]\+\([0-9]\+\)$/\1/p' | xargs echo}
+
+${color lightgoldenrod}System log${color}
+${tail /var/log/messages 3}
+
+${color lightgoldenrod}Music${color}
+  MPD    ${mpd_bar 7,200}
+         ${mpd_smart}
