@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Wed 30 Jul 2008 20:04:22 BST
+" Most recent update: Mon 25 Aug 2008 18:07:08 BST
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -850,6 +850,7 @@ if has("eval") && has("autocmd")
         iabbrev <buffer> jco const
         iabbrev <buffer> jdg \ingroup
         iabbrev <buffer> jdx /**<CR><CR>/<Up>
+        iabbrev <buffer> jin #include
         iabbrev <buffer> jit iterator
         iabbrev <buffer> jns namespace
         iabbrev <buffer> jpr protected
