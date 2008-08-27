@@ -1,3 +1,4 @@
+# vim: set ft=conkyrc :
 alignment bottom_left
 double_buffer yes
 own_window no
@@ -22,13 +23,13 @@ ${color lightgoldenrod}System${color}
 
 ${color lightgoldenrod}CPUs${color}
   CPU1   ${cpugraph cpu1 20,200}
-         ${freq 0}MHz ${cpu cpu1}%
+         ${freq 0}MHz ${platform coretemp.0 temp 1}C ${cpu cpu1}%
   CPU2   ${cpugraph cpu2 20,200}
-         ${freq 1}MHz ${cpu cpu2}%
+         ${freq 1}MHz ${platform coretemp.1 temp 1}C ${cpu cpu2}%
   CPU3   ${cpugraph cpu3 20,200}
-         ${freq 2}MHz ${cpu cpu3}%
+         ${freq 2}MHz ${platform coretemp.2 temp 1}C ${cpu cpu3}%
   CPU4   ${cpugraph cpu4 20,200}
-         ${freq 3}MHz ${cpu cpu4}%
+         ${freq 3}MHz ${platform coretemp.3 temp 1}C ${cpu cpu4}%
 
 ${color lightgoldenrod}Memory${color}
   RAM    ${membar 7,200}
