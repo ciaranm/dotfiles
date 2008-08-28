@@ -5,7 +5,7 @@
 # I use the same .bashrc on Linux, IRIX and Slowaris, so there's some
 # strange uname stuff in there.
 #
-# Most recent update: Wed 16 Jul 2008 20:15:30 BST
+# Most recent update: Thu 28 Aug 2008 02:17:42 BST
 #
 ########################################################################
 
@@ -359,8 +359,8 @@ compiler-gcc-3.4() {
 compiler-gcc() {
     if [[ ${HOSTNAME} == "snowmobile" ]] ; then
         export \
-            CFLAGS="-O0 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 ${MACHINE_CFLAGS}" \
-            CXXFLAGS="-O0 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 ${MACHINE_CXXFLAGS}" \
+            CFLAGS="-O1 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 ${MACHINE_CFLAGS}" \
+            CXXFLAGS="-O1 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 ${MACHINE_CXXFLAGS}" \
             LDFLAGS="-Wl,--as-needed" PATH="/usr/lib/ccache/bin/:${PATH}" \
             ACTIVE_COMPILER="+"
     else
