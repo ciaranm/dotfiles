@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Mon 25 Aug 2008 18:07:08 BST
+" Most recent update: Thu 28 Aug 2008 03:10:38 BST
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -467,17 +467,19 @@ if has("autocmd") && has("eval")
             if hostname() == "snowmobile"
                 let g:paludis_configure_command = "! ./configure --prefix=/usr --sysconfdir=/etc" .
                             \ " --localstatedir=/var/lib --enable-qa --disable-gtk --disable-gtktests" .
-                            \ " --enable-ruby --disable-python --enable-glsa --enable-xml --enable-vim --enable-bash-completion" .
+                            \ " --enable-ruby --enable-python --enable-glsa --enable-xml --enable-vim --enable-bash-completion" .
                             \ " --enable-zsh-completion --with-repositories=default,unpackaged,unavailable" .
                             \ " --with-clients=default,importare,inquisitio,contrarius,accerso,instruo,qualudis,reconcilio" .
                             \ " --with-environments=all --enable-doxygen" .
-                            \ " --enable-visibility --enable-threads --enable-gnu-ldconfig --disable-htmltidy --disable-ruby-doc"
+                            \ " --enable-visibility --enable-threads --enable-gnu-ldconfig --disable-htmltidy" .
+                            \ " --enable-ruby-doc --enable-python-doc"
             else
                 let g:paludis_configure_command = "! ./configure --prefix=/usr --sysconfdir=/etc" .
                             \ " --localstatedir=/var/lib --enable-qa --enable-gtk --disable-gtktests" .
                             \ " --enable-ruby --enable-python --enable-glsa --enable-xml --enable-vim --enable-bash-completion" .
                             \ " --enable-zsh-completion --with-repositories=all --with-clients=all --with-environments=all" .
-                            \ " --enable-visibility --enable-threads --enable-gnu-ldconfig --enable-htmltidy --enable-ruby-doc"
+                            \ " --enable-visibility --enable-threads --enable-gnu-ldconfig --enable-htmltidy" .
+                            \ " --enable-ruby-doc --enable-python-doc"
             endif
 
             " Similarly, try to automatically run ./configure and / or
