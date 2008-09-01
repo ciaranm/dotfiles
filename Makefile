@@ -8,7 +8,8 @@ CONFIGS = \
 	toprc \
 	vimrc \
 	conkyrc-snowmobile \
-	conkyrc-snowcone
+	conkyrc-snowcone \
+	xbindkeysrc-snowcone
 
 default : all
 
@@ -31,6 +32,9 @@ install-file-conkyrc-snowmobile : conkyrc-snowmobile
 
 install-file-conkyrc-snowcone : conkyrc-snowcone
 	[[ `hostname` != 'snowcone' ]] || install $< $(HOME)/.conkyrc
+
+install-file-xbindkeysrc-snowcone : xbindkeysrc-snowcone
+	[[ `hostname` != 'snowcone' ]] || install $< $(HOME)/.xbindkeysrc
 
 install: $(foreach f, $(CONFIGS), install-file-$(f) )
 

@@ -1,0 +1,6 @@
+"for a in `seq 1 10 ` ; do xdotool click 5 ; done"
+  b:9
+
+"for a in `seq 1 10 ` ; do xdotool click 4 ; done"
+  b:8
+
