@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Thu 28 Aug 2008 03:10:38 BST
+" Most recent update: Fri 19 Sep 2008 07:02:20 BST
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -181,6 +181,7 @@ inoremap # X<BS>#
 if has("folding")
     set foldenable
     set foldmethod=indent
+    set foldlevelstart=99
 endif
 
 " Syntax when printing
