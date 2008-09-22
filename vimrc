@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Fri 19 Sep 2008 07:02:20 BST
+" Most recent update: Mon 22 Sep 2008 15:22:42 BST
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -99,7 +99,7 @@ set whichwrap+=<,>,[,]
 " Use the cool tab complete menu
 set wildmenu
 set wildignore+=*.o,*~,.lo
-set suffixes+=.in,.a
+set suffixes+=.in,.a,.1
 
 " Allow edit buffers to be hidden
 set hidden
