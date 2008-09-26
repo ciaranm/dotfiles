@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Mon 22 Sep 2008 15:22:42 BST
+" Most recent update: Fri 26 Sep 2008 22:42:06 BST
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -855,6 +855,7 @@ if has("eval") && has("autocmd")
         iabbrev <buffer> jdx /**<CR><CR>/<Up>
         iabbrev <buffer> jin #include
         iabbrev <buffer> jit iterator
+        iabbrev <buffer> jmp std::make_pair
         iabbrev <buffer> jns namespace
         iabbrev <buffer> jpr protected
         iabbrev <buffer> jpu public
