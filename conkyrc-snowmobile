@@ -12,7 +12,7 @@ default_color grey90
 default_shade_color grey10
 border_width 0
 gap_x 10
-gap_y 10
+gap_y 60
 mpd_host 127.0.0.1
 
 TEXT
