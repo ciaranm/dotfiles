@@ -5,7 +5,7 @@
 # I use the same .bashrc on Linux, IRIX and Slowaris, so there's some
 # strange uname stuff in there.
 #
-# Most recent update: Thu 28 Aug 2008 02:17:42 BST
+# Most recent update: Sat 11 Oct 2008 01:45:29 BST
 #
 ########################################################################
 
@@ -93,7 +93,15 @@ fi
 
 # {{{ X
 if [[ -z "${XSESSION}" ]] ; then
-    type -p fluxbox &>/dev/null && export XSESSION=fluxbox
+    case "${HOSTNAME:-$(hostname )}" in
+        snowmobile*)
+            export XSESSION=awesome
+        ;;
+
+        *)
+            export XSESSION=fluxbox
+        ;;
+    esac
 fi
 # }}}
 
