@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Mon 06 Oct 2008 22:28:06 BST
+" Most recent update: Fri 24 Oct 2008 02:40:06 BST
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -470,7 +470,7 @@ if has("autocmd") && has("eval")
                             \ " --localstatedir=/var/lib --enable-qa --disable-gtk --disable-gtktests" .
                             \ " --enable-ruby --enable-python --enable-glsa --enable-xml --enable-vim --enable-bash-completion" .
                             \ " --enable-zsh-completion --with-repositories=default,unpackaged,unavailable" .
-                            \ " --with-clients=default,importare,inquisitio,contrarius,accerso,instruo,qualudis,reconcilio" .
+                            \ " --with-clients=default,importare,inquisitio,accerso,instruo,qualudis,reconcilio" .
                             \ " --with-environments=all --enable-doxygen" .
                             \ " --enable-visibility --enable-threads --enable-gnu-ldconfig --enable-htmltidy" .
                             \ " --enable-ruby-doc --enable-python-doc"
