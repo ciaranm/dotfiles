@@ -5,7 +5,7 @@
 # I use the same .bashrc on Linux, IRIX and Slowaris, so there's some
 # strange uname stuff in there.
 #
-# Most recent update: Sat 11 Oct 2008 01:45:29 BST
+# Most recent update: Sat Oct 25 08:21:30 2008
 #
 ########################################################################
 
@@ -349,6 +349,11 @@ case "${HOSTNAME:-$(hostname )}" in
         export MACHINE_CXXFLAGS="-march=core2"
         ;;
 
+    snowmelt*)
+        export MACHINE_CFLAGS="-march=k8"
+        export MACHINE_CXXFLAGS="-march=k8"
+        ;;
+
     snowmobile*)
         export MACHINE_CFLAGS="-march=pentium-m"
         export MACHINE_CXXFLAGS="-march=pentium-m"
@@ -413,6 +418,7 @@ case "${cache_term_colours}" in
         cache_colour_l_pink='\033[38;5;206m'
         cache_colour_m_teal='\033[38;5;38m'
         cache_colour_m_brwn='\033[38;5;130m'
+        cache_colour_l_whte='\033[38;5;230m'
         cache_colour_end='\033[0;0m'
         ;;
     16)
@@ -427,6 +433,7 @@ case "${cache_term_colours}" in
         cache_colour_l_pink='\033[1;35m'
         cache_colour_m_teal='\033[0;36m'
         cache_colour_m_brwn='\033[0;31m'
+        cache_colour_l_whte='\033[0;37m'
         cache_colour_end='\033[0;0m'
         ;;
     *)
@@ -451,6 +458,9 @@ case "${HOSTNAME:-$(hostname )}" in
         ;;
     snowmobile*)
         cache_colour_hst=${cache_colour_m_orng}
+        ;;
+    snowmelt*)
+        cache_colour_hst=${cache_colour_l_whte}
         ;;
     *)
         cache_colour_hst=${cache_colour_m_gren}
