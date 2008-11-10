@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Mon 27 Oct 2008 05:58:20 GMT
+" Most recent update: Mon 10 Nov 2008 15:42:54 GMT
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -473,14 +473,14 @@ if has("autocmd") && has("eval")
                             \ " --with-clients=default,importare,inquisitio,accerso,cave,instruo,qualudis,reconcilio" .
                             \ " --with-environments=all --enable-doxygen" .
                             \ " --enable-visibility --enable-threads --enable-gnu-ldconfig --enable-htmltidy" .
-                            \ " --enable-ruby-doc --enable-python-doc"
+                            \ " --enable-ruby-doc --enable-python-doc --enable-metadata-xml"
             else
                 let g:paludis_configure_command = "! ./configure --prefix=/usr --sysconfdir=/etc" .
                             \ " --localstatedir=/var/lib --enable-qa --enable-gtk --disable-gtktests" .
                             \ " --enable-ruby --enable-python --enable-glsa --enable-xml --enable-vim --enable-bash-completion" .
                             \ " --enable-zsh-completion --with-repositories=all --with-clients=all --with-environments=all" .
                             \ " --enable-visibility --enable-threads --enable-gnu-ldconfig --enable-htmltidy" .
-                            \ " --enable-ruby-doc --enable-python-doc"
+                            \ " --enable-ruby-doc --enable-python-doc --enable-metadata-xml"
             endif
 
             " Similarly, try to automatically run ./configure and / or
