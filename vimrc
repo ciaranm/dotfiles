@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Mon 10 Nov 2008 15:42:54 GMT
+" Most recent update: Fri 14 Nov 2008 02:23:44 GMT
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -480,7 +480,7 @@ if has("autocmd") && has("eval")
                             \ " --enable-ruby --enable-python --enable-glsa --enable-xml --enable-vim --enable-bash-completion" .
                             \ " --enable-zsh-completion --with-repositories=all --with-clients=all --with-environments=all" .
                             \ " --enable-visibility --enable-threads --enable-gnu-ldconfig --enable-htmltidy" .
-                            \ " --enable-ruby-doc --enable-python-doc --enable-metadata-xml"
+                            \ " --enable-ruby-doc --enable-python-doc --enable-metadata-xml --with-config-framework=eclectic"
             endif
 
             " Similarly, try to automatically run ./configure and / or
