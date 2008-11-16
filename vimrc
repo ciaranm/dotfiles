@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Fri 14 Nov 2008 02:23:44 GMT
+" Most recent update: Sun 16 Nov 2008 01:05:16 GMT
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -517,6 +517,16 @@ if has("autocmd") && has("eval")
 
             autocmd QuickFixCmdPost *
                         \ let &titlestring=g:old_titlestring
+
+            if hostname() == "snowmobile"
+                autocmd QuickFixCmdPre make
+                            \ let g:active_line=getpid() . " vim:" . expand("%:p:h:t") |
+                            \ exec "silent !echo '" . g:active_line . "' >> ~/.config/awesome/active"
+
+                autocmd QuickFixCmdPost make
+                            \ exec "silent !sed -i -e '/^" . getpid() . " /d' ~/.config/awesome/active"
+            endif
+
         catch
         endtry
 
