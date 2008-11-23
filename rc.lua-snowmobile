@@ -144,8 +144,8 @@ for s = 1, screen.count() do
                            mytasklist[s],
                            myactivebox,
                            mytextbox,
-                           mylayoutbox[s],
-                           s == 1 and mysystray or nil }
+                           s == 1 and mysystray or nil,
+                           mylayoutbox[s] }
     mywibox[s].screen = s
 end
 -- }}}
