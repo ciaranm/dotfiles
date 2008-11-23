@@ -9,7 +9,9 @@ CONFIGS = \
 	vimrc \
 	conkyrc-snowmobile \
 	conkyrc-snowcone \
-	xbindkeysrc-snowcone
+	xbindkeysrc-snowcone \
+	rc.lua-snowmobile \
+	theme-snowmobile
 
 default : all
 
@@ -35,6 +37,12 @@ install-file-conkyrc-snowcone : conkyrc-snowcone
 
 install-file-xbindkeysrc-snowcone : xbindkeysrc-snowcone
 	[[ `hostname` != 'snowcone' ]] || install $< $(HOME)/.xbindkeysrc
+
+install-file-rc.lua-snowmobile : rc.lua-snowmobile
+	[[ `hostname` != 'snowmobile' ]] || install $< $(HOME)/.config/awesome/rc.lua
+
+install-file-theme-snowmobile : theme-snowmobile
+	[[ `hostname` != 'snowmobile' ]] || install $< $(HOME)/.config/awesome/theme
 
 install: $(foreach f, $(CONFIGS), install-file-$(f) )
 
