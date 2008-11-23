@@ -5,7 +5,7 @@
 # I use the same .bashrc on Linux, IRIX and Slowaris, so there's some
 # strange uname stuff in there.
 #
-# Most recent update: Sat Oct 25 08:21:30 2008
+# Most recent update: Sun 23 Nov 2008 22:24:23 GMT
 #
 ########################################################################
 
@@ -250,6 +250,12 @@ fi
 
 xt() {
     echo -n -e "\033]0;$*\007"
+}
+
+xa() {
+    echo $$ $1 >> ~/.config/awesome/active
+    "$@"
+    sed -e "/^$$ /d" -i ~/.config/awesome/active
 }
 # }}}
 
