@@ -53,10 +53,10 @@ ${color lightgoldenrod}Outbound Connections (${tcp_portmon 32768 61000 count})${
   ${tcp_portmon 32768 61000 rservice 3} ${tab 70 0} ${tcp_portmon 32768 61000 rhost 3}
 
 ${color lightgoldenrod}Apps ${color}
-  ccache ${tab 70 0} ${execi 15 ccache -s | sed -n '2,3s/[^0-9]\+\([0-9]\+\)$/\1/p' | xargs echo}
+  ccache ${tab 70 0} ${execi 120 ccache -s | sed -n '2,3s/[^0-9]\+\([0-9]\+\)$/\1/p' | xargs echo}
 
 ${color lightgoldenrod}System log${color}
-${tail /var/log/messages 3}
+${tail /var/log/messages 3 60}
 
 ${color lightgoldenrod}Music${color}
   MPD ${tab 70 0} ${mpd_bar 7,200}
