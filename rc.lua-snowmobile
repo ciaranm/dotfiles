@@ -392,6 +392,7 @@ awful.hooks.arrange.register(function (screen)
 end)
 
 -- Hook called every second
+battery_bg=""
 awful.hooks.timer.register(1, function ()
     if os.time() % 10 == 0 then
         local f = io.open('/sys/class/power_supply/BAT1/status')
