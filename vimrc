@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Sun 16 Nov 2008 01:05:16 GMT
+" Most recent update: Mon 15 Dec 2008 21:26:43 GMT
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -624,19 +624,13 @@ imap <silent> <F3> <C-o>:silent nohlsearch<CR>
 nmap <F4> :Kwbd<CR>
 nmap <F5> <C-w>c
 nmap <F6> :exec "make check TESTS_ENVIRONMENT=true XFAIL_TESTS="<CR>
-nmap <A-F6> :exec "make -C " . expand("%:p:h") . " check TESTS_ENVIRONMENT=true XFAIL_TESTS="<CR>
-nmap <S-F6> :exec "make -C " . expand("%:p:h") . " check TESTS_ENVIRONMENT=true XFAIL_TESTS="<CR>
-nmap <A-F6> :exec "make -C " . expand("%:p:h") . " check TESTS_ENVIRONMENT=true XFAIL_TESTS="<CR>
+nmap <Leader><F6> :exec "make -C " . expand("%:p:h") . " check TESTS_ENVIRONMENT=true XFAIL_TESTS="<CR>
 nmap <F7> :make all-then-check<CR>
-nmap <S-F7> :exec "make -C " . expand("%:p:h") . " check"<CR>
-nmap <A-F7> :exec "make -C " . expand("%:p:h") . " check"<CR>
+nmap <Leader><F7> :exec "make -C " . expand("%:p:h") . " check"<CR>
 nmap <F8> :make<CR>
-nmap <S-F8> :exec "make -C " . expand("%:p:h")<CR>
-nmap <A-F8> :exec "make -C " . expand("%:p:h")<CR>
+nmap <Leader><F8> :exec "make -C " . expand("%:p:h")<CR>
 nmap <F9> :exec "make -C " . expand("%:p:h") . " check SUBDIRS= check_PROGRAMS=" . GetCurrentTest()
             \ . " TESTS=" . GetCurrentTest() <CR>
-nmap <F10> :!if [[ -d .svn ]] ; then svn update ; else svk update ; fi<CR>
-nmap <F11> :!if [[ -d .svn ]] ; then svn status ; else svk status ; fi \| grep -v '^?' \| sort -k2<CR>
 
 " Insert a single char
 noremap <Leader>i i<Space><Esc>r
