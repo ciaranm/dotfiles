@@ -30,19 +30,19 @@ install-file-securemodelines.vim : securemodelines.vim
 	install $< $(HOME)/.vim/plugin/$<
 
 install-file-conkyrc-snowmobile : conkyrc-snowmobile
-	[[ `hostname` != 'snowmobile' ]] || install $< $(HOME)/.conkyrc
+	test `hostname` != 'snowmobile' || install $< $(HOME)/.conkyrc
 
 install-file-conkyrc-snowcone : conkyrc-snowcone
-	[[ `hostname` != 'snowcone' ]] || install $< $(HOME)/.conkyrc
+	test `hostname` != 'snowcone' || install $< $(HOME)/.conkyrc
 
 install-file-xbindkeysrc-snowcone : xbindkeysrc-snowcone
-	[[ `hostname` != 'snowcone' ]] || install $< $(HOME)/.xbindkeysrc
+	test `hostname` != 'snowcone' || install $< $(HOME)/.xbindkeysrc
 
 install-file-rc.lua-snowmobile : rc.lua-snowmobile
-	[[ `hostname` != 'snowmobile' ]] || install $< $(HOME)/.config/awesome/rc.lua
+	test `hostname` != 'snowmobile' || install $< $(HOME)/.config/awesome/rc.lua
 
 install-file-theme-snowmobile : theme-snowmobile
-	[[ `hostname` != 'snowmobile' ]] || install $< $(HOME)/.config/awesome/theme
+	test `hostname` != 'snowmobile' || install $< $(HOME)/.config/awesome/theme
 
 install: $(foreach f, $(CONFIGS), install-file-$(f) )
 
