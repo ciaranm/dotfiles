@@ -5,7 +5,7 @@
 # If you want SVGs and extras, get them from garoth.com/awesome/sky-theme
 
 # BASICS
-font          = sans 8
+font          = sans 6
 
 bg_focus      = #e2eeea
 bg_normal      = #729fcf
