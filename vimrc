@@ -6,7 +6,7 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Mon 15 Dec 2008 21:26:43 GMT
+" Most recent update: Sun 04 Jan 2009 22:31:48 GMT
 "
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
@@ -668,6 +668,9 @@ noremap <Leader>enc :<C-w>execute
 
 " Edit something in the current directory
 noremap <Leader>ed :e <C-r>=expand("%:p:h")<CR>/<C-d>
+
+" Select thing just pasted
+noremap <Leader>v `[v`]
 
 " Enable fancy % matching
 if has("eval")
