@@ -6,8 +6,6 @@ scriptencoding utf-8
 " I finally added some comments, so you can have some vague idea of
 " what all this does.
 "
-" Most recent update: Sun 04 Jan 2009 22:31:48 GMT
-"
 " Don't just blindly copy this vimrc. There's some rather idiosyncratic
 " stuff in here...
 "
@@ -365,14 +363,6 @@ if has("eval")
         execute "resize" l:h
     endfun
 
-    " Update .*rc header
-    fun! <SID>UpdateRcHeader()
-        let l:c=col(".")
-        let l:l=line(".")
-        silent 1,10s-\(Most recent update:\).*-\="Most recent update: ".strftime("%c")-e
-        call cursor(l:l, l:c)
-    endfun
-
     if v:version >= 700
         " Load gcov marks
         hi UncoveredSign guibg=#2e2e2e guifg=#e07070
@@ -422,10 +412,6 @@ if has("autocmd") && has("eval")
 
         " Automagic line numbers
         autocmd BufEnter * :call <SID>WindowWidth()
-
-        " Update header in .vimrc and .bashrc before saving
-        autocmd BufWritePre *vimrc  :call <SID>UpdateRcHeader()
-        autocmd BufWritePre *bashrc :call <SID>UpdateRcHeader()
 
         " Always do a full syntax refresh
         autocmd BufEnter * syntax sync fromstart

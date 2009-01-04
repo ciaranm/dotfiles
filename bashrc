@@ -5,8 +5,6 @@
 # I use the same .bashrc on Linux, IRIX and Slowaris, so there's some
 # strange uname stuff in there.
 #
-# Most recent update: Sun 23 Nov 2008 22:24:23 GMT
-#
 ########################################################################
 
 shopt -s extglob
