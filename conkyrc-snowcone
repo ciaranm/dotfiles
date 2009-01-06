@@ -55,11 +55,8 @@ ${color lightgoldenrod}Filesystems${color}
 ${color lightgoldenrod}Disks${color}
   sda    ${diskiograph_read /dev/sda 20,97} ${diskiograph_write /dev/sda 20,97}
          ${hddtemp sda}
-  hda    ${diskiograph_read /dev/hda 20,97} ${diskiograph_write /dev/hda 20,97}
-         ${hddtemp hda}
   hdb    ${diskiograph_read /dev/hdb 20,97} ${diskiograph_write /dev/hdb 20,97}
          ${hddtemp hdb}
-  sr0    ${diskiograph_read /dev/sr0 20,97} ${diskiograph_write /dev/sr0 20,97}
 
 ${color lightgoldenrod}Network${color}
   eth1   ${downspeedgraph eth1 20,97} ${upspeedgraph eth1 20,97}
