@@ -453,20 +453,20 @@ if has("autocmd") && has("eval")
 
             if hostname() == "snowmobile"
                 let g:paludis_configure_command = "! ./configure --prefix=/usr --sysconfdir=/etc" .
-                            \ " --localstatedir=/var/lib --enable-qa --disable-gtk --disable-gtktests" .
-                            \ " --enable-ruby --enable-python --enable-glsa --enable-xml --enable-vim --enable-bash-completion" .
+                            \ " --localstatedir=/var/lib --enable-qa " .
+                            \ " --enable-ruby --enable-python --enable-xml --enable-vim --enable-bash-completion" .
                             \ " --enable-zsh-completion --with-repositories=default,unpackaged,unavailable" .
                             \ " --with-clients=default,importare,inquisitio,accerso,cave,instruo,qualudis,reconcilio" .
                             \ " --with-environments=all --enable-doxygen" .
-                            \ " --enable-visibility --enable-threads --enable-gnu-ldconfig --enable-htmltidy" .
-                            \ " --enable-ruby-doc --enable-python-doc --enable-metadata-xml"
+                            \ " --enable-visibility --enable-gnu-ldconfig --enable-htmltidy" .
+                            \ " --enable-ruby-doc --enable-python-doc"
             else
                 let g:paludis_configure_command = "! ./configure --prefix=/usr --sysconfdir=/etc" .
-                            \ " --localstatedir=/var/lib --enable-qa --enable-gtk --disable-gtktests" .
-                            \ " --enable-ruby --enable-python --enable-glsa --enable-xml --enable-vim --enable-bash-completion" .
+                            \ " --localstatedir=/var/lib --enable-qa " .
+                            \ " --enable-ruby --enable-python --enable-vim --enable-bash-completion" .
                             \ " --enable-zsh-completion --with-repositories=all --with-clients=all --with-environments=all" .
-                            \ " --enable-visibility --enable-threads --enable-gnu-ldconfig --enable-htmltidy" .
-                            \ " --enable-ruby-doc --enable-python-doc --enable-metadata-xml --with-config-framework=eclectic"
+                            \ " --enable-visibility --enable-gnu-ldconfig --enable-htmltidy" .
+                            \ " --enable-ruby-doc --enable-python-doc --enable-xml"
             endif
 
             " Similarly, try to automatically run ./configure and / or
