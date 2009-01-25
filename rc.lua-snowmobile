@@ -397,8 +397,8 @@ end)
 battery_bg=""
 awful.hooks.timer.register(1, function ()
     local f = io.open('/sys/class/power_supply/BAT1/status')
-    local l
     if f then
+        local l = f:lines()
         for line in l do
             if line == 'Charging' then
                 battery_bg="color='#fce94f'"
