@@ -396,10 +396,9 @@ end)
 -- Hook called every second
 battery_bg=""
 awful.hooks.timer.register(1, function ()
-    if os.time() % 10 == 0 then
-        local f = io.open('/sys/class/power_supply/BAT1/status')
-        local l = f:lines()
-
+    local f = io.open('/sys/class/power_supply/BAT1/status')
+    local l
+    if f then
         for line in l do
             if line == 'Charging' then
                 battery_bg="color='#fce94f'"
@@ -409,8 +408,9 @@ awful.hooks.timer.register(1, function ()
                 battery_bg=""
             end
         end
-
         f:close()
+    else
+        battery_bg="color='#fc4f4f'"
     end
 
     if os.time() % 5 == 0 then
