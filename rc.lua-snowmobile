@@ -278,6 +278,7 @@ keybinding({ modkey }, "F3", function () awful.spawn("firefox") end):add()
 keybinding({ modkey }, "F4", function () awful.spawn("xterm") end):add()
 keybinding({ modkey }, "F5", function () awful.spawn("gvim") end):add()
 keybinding({ modkey }, "F12", function () awful.spawn("alock -auth pam -bg blank:color=yellow") end):add()
+keybinding({ modkey }, "c", function () awful.spawn("echo > ~/.config/awesome/active") end):add()
 keybinding({ modkey }, "w", function () awful.spawn("fbsetbg -r ~/wallpaper/current/") end):add()
 keybinding({ modkey }, "p", function () awful.spawn("mpc toggle") end):add()
 
