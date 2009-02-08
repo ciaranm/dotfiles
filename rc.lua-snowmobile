@@ -271,6 +271,22 @@ table.insert(globalkeys, key({ modkey }, "F5", function () awful.util.spawn("gvi
 table.insert(globalkeys, key({ modkey }, "F12", function () awful.util.spawn("alock -auth pam -bg blank:color=yellow") end))
 table.insert(globalkeys, key({ modkey }, "p", function () awful.util.spawn("mpc toggle") end))
 table.insert(globalkeys, key({ modkey }, "w", function () awful.util.spawn("fbsetbg -r ~/wallpaper/current/") end))
+
+-- Rename
+table.insert(globalkeys, key({ modkey }, "r", function ()
+    awful.prompt.run({ prompt = "Rename: " },
+    mypromptbox[mouse.screen],
+    function (str)
+        if #str > 0 then
+            for s = 1, screen.count() do
+                awful.tag.selected(s).name = string.match(awful.tag.selected(s).name, '.') .. "=" .. str
+            end
+        end
+    end,
+    nil,
+    awful.util.getdir("cache") .. "/history_rename")
+end))
+
 --
 -- Client awful tagging: this is useful to tag some clients and then do stuff like move to tag on them
 table.insert(clientkeys, key({ modkey }, "t", awful.client.togglemarked))
