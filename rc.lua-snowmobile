@@ -6,7 +6,10 @@
 
 -- Include awesome libraries, with lots of useful function!
 require("awful")
+-- Theme handling library
 require("beautiful")
+-- Notification library
+require("naughty")
 
 -- {{{ Variable definitions
 theme_path = ".config/awesome/theme"
@@ -17,14 +20,18 @@ terminal = "xterm"
 editor_cmd = "gvim -f"
 
 -- Default modkey.
+-- Usually, Mod4 is the key with a logo between Control and Alt.
+-- If you do not like this or do not have such a key,
+-- I suggest you to remap Mod4 to another key using xmodmap or other tools.
+-- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
-    "magnifier",
-    "max",
-    "tiletop"
+    awful.layout.suit.magnifier,
+    awful.layout.suit.max,
+    awful.layout.suit.tile.top
 }
 
 -- Table of clients that should be set floating. The index may be either
@@ -66,6 +73,7 @@ for s = 1, screen.count() do
         tags[s][tagnumber] = tag({ name = tagnames[tagnumber], layout = layouts[1] })
         -- Add tags to screen one by one
         tags[s][tagnumber].screen = s
+        awful.layout.set(layouts[1], tags[s][tagnumber])
     end
     -- I'm sure you want to see at least one tag.
     tags[s][1].selected = true
@@ -78,8 +86,8 @@ mytextbox = widget({ type = "textbox", align = "right" })
 -- Set the default text in textbox
 mytextbox.text = "<b><small> " .. AWESOME_RELEASE .. " </small></b>"
 
-myactivebox = widget({ type = "textbox", name = "myactivebox", align = "right" })
-myactivebox.text = ""
+-----!!! myactivebox = widget({ type = "textbox", align = "right" })
+-----!!! myactivebox.text = ""
 
 -- Create a laucher widget and a main menu
 myawesomemenu = {
@@ -113,7 +121,7 @@ mytaglist.buttons = { button({ }, 1, awful.tag.viewonly),
                       button({ }, 5, awful.tag.viewprev) }
 mytasklist = {}
 mytasklist.buttons = { button({ }, 1, function (c) client.focus = c; c:raise() end),
-                       button({ }, 3, function () awful.menu.clients({ width=250 }) end),
+                       button({ }, 3, function () if instance then instance:hide() end instance = awful.menu.clients({ width=250 }) end),
                        button({ }, 4, function () awful.client.focus.byidx(1) end),
                        button({ }, 5, function () awful.client.focus.byidx(-1) end) }
 
@@ -132,8 +140,8 @@ for s = 1, screen.count() do
 
     -- Create a tasklist widget
     mytasklist[s] = awful.widget.tasklist.new(function(c)
-        return awful.widget.tasklist.label.currenttags(c, s)
-    end, mytasklist.buttons)
+                                                  return awful.widget.tasklist.label.currenttags(c, s)
+                                              end, mytasklist.buttons)
 
     -- Create the wibox
     mywibox[s] = wibox({ position = "top", fg = beautiful.fg_normal, bg = beautiful.bg_normal })
@@ -142,7 +150,7 @@ for s = 1, screen.count() do
                            mypromptbox[s],
                            mytaglist[s],
                            mytasklist[s],
-                           myactivebox,
+-----!!!                           myactivebox,
                            mytextbox,
                            s == 1 and mysystray or nil,
                            mylayoutbox[s] }
@@ -151,7 +159,7 @@ end
 -- }}}
 
 -- {{{ Mouse bindings
-awesome.buttons({
+root.buttons({
     button({ }, 3, function () mymainmenu:toggle() end),
     button({ }, 4, awful.tag.viewnext),
     button({ }, 5, awful.tag.viewprev)
@@ -159,7 +167,6 @@ awesome.buttons({
 -- }}}
 
 -- {{{ Key bindings
-
 -- Bind keyboard digits
 -- Compute the maximum number of digit we need, limited to 9
 keynumber = 0
@@ -167,134 +174,121 @@ for s = 1, screen.count() do
    keynumber = math.min(9, math.max(#tags[s], keynumber));
 end
 
+globalkeys = {}
+clientkeys = {}
+
 for i = 1, keynumber do
-    keybinding({ modkey }, i, function ()
-        local screen = mouse.screen
-        if tags[screen][i] then
-            awful.tag.viewonly(tags[screen][i])
-        end
-    end):add()
-    keybinding({ modkey, "Control" }, i, function ()
-        local screen = mouse.screen
-        if tags[screen][i] then
-            tags[screen][i].selected = not tags[screen][i].selected
-        end
-    end):add()
-    keybinding({ modkey, "Shift" }, i, function ()
-        if client.focus then
-            if tags[client.focus.screen][i] then
-                awful.client.movetotag(tags[client.focus.screen][i])
-            end
-        end
-    end):add()
-    keybinding({ modkey, "Control", "Shift" }, i, function ()
-        if client.focus then
-            if tags[client.focus.screen][i] then
-                awful.client.toggletag(tags[client.focus.screen][i])
-            end
-        end
-    end):add()
+    table.insert(globalkeys,
+        key({ modkey }, i,
+            function ()
+                local screen = mouse.screen
+                if tags[screen][i] then
+                    awful.tag.viewonly(tags[screen][i])
+                end
+            end))
+    table.insert(globalkeys,
+        key({ modkey, "Control" }, i,
+            function ()
+                local screen = mouse.screen
+                if tags[screen][i] then
+                    tags[screen][i].selected = not tags[screen][i].selected
+                end
+            end))
+    table.insert(globalkeys,
+        key({ modkey, "Shift" }, i,
+            function ()
+                if client.focus and tags[client.focus.screen][i] then
+                    awful.client.movetotag(tags[client.focus.screen][i])
+                end
+            end))
+    table.insert(globalkeys,
+        key({ modkey, "Control", "Shift" }, i,
+            function ()
+                if client.focus and tags[client.focus.screen][i] then
+                    awful.client.toggletag(tags[client.focus.screen][i])
+                end
+            end))
 end
 
-keybinding({ modkey }, "Left", awful.tag.viewprev):add()
-keybinding({ modkey }, "Right", awful.tag.viewnext):add()
-keybinding({ modkey }, "Escape", awful.tag.history.restore):add()
+table.insert(globalkeys, key({ modkey }, "Left", awful.tag.viewprev))
+table.insert(globalkeys, key({ modkey }, "Right", awful.tag.viewnext))
+table.insert(globalkeys, key({ modkey }, "Escape", awful.tag.history.restore))
+
+table.insert(globalkeys, key({ modkey }, "j", function () awful.client.focus.byidx(1); if client.focus then client.focus:raise() end end))
+table.insert(globalkeys, key({ modkey }, "k", function () awful.client.focus.byidx(-1);  if client.focus then client.focus:raise() end end))
+table.insert(globalkeys, key({ modkey, "Shift" }, "j", function () awful.client.swap.byidx(1) end))
+table.insert(globalkeys, key({ modkey, "Shift" }, "k", function () awful.client.swap.byidx(-1) end))
+
+table.insert(globalkeys, key({ modkey, "Control" }, "j", function () awful.screen.focus(1) end))
+table.insert(globalkeys, key({ modkey, "Control" }, "k", function () awful.screen.focus(-1) end))
+
+table.insert(globalkeys, key({ modkey }, "Tab", function () awful.client.focus.history.previous(); if client.focus then client.focus:raise() end end))
+
+table.insert(globalkeys, key({ modkey }, "u", awful.client.urgent.jumpto))
 
 -- Standard program
-keybinding({ modkey }, "Return", function () awful.util.spawn(terminal) end):add()
+table.insert(globalkeys, key({ modkey }, "Return", function () awful.util.spawn(terminal) end))
 
-keybinding({ modkey, "Control" }, "r", function ()
-    mypromptbox[mouse.screen].text =
-    awful.util.escape(awful.util.restart())
-end):add()
-keybinding({ modkey, "Shift" }, "q", awesome.quit):add()
+table.insert(globalkeys, key({ modkey, "Control" }, "r", function ()
+                                                             mypromptbox[mouse.screen].text =
+                                                                 awful.util.escape(awful.util.restart())
+                                                          end))
+table.insert(globalkeys, key({ modkey, "Shift" }, "q", awesome.quit))
 
 -- Client manipulation
-keybinding({ modkey }, "m", awful.client.maximize):add()
-keybinding({ modkey }, "f", function () if client.focus then client.focus.fullscreen = not client.focus.fullscreen end end):add()
-keybinding({ modkey, "Shift" }, "c", function () if client.focus then client.focus:kill() end end):add()
-keybinding({ modkey }, "j", function () awful.client.focus.byidx(1); if client.focus then client.focus:raise() end end):add()
-keybinding({ modkey }, "k", function () awful.client.focus.byidx(-1);  if client.focus then client.focus:raise() end end):add()
-keybinding({ modkey, "Shift" }, "j", function () awful.client.swap.byidx(1) end):add()
-keybinding({ modkey, "Shift" }, "k", function () awful.client.swap.byidx(-1) end):add()
-keybinding({ modkey, "Control" }, "j", function () awful.screen.focus(1) end):add()
-keybinding({ modkey, "Control" }, "k", function () awful.screen.focus(-1) end):add()
-keybinding({ modkey, "Control" }, "space", awful.client.togglefloating):add()
-keybinding({ modkey, "Control" }, "Return", function () if client.focus then client.focus:swap(awful.client.getmaster()) end end):add()
-keybinding({ modkey }, "o", awful.client.movetoscreen):add()
-keybinding({ modkey }, "Tab", awful.client.focus.history.previous):add()
-keybinding({ modkey }, "u", awful.client.urgent.jumpto):add()
-keybinding({ modkey, "Shift" }, "r", function () if client.focus then client.focus:redraw() end end):add()
+table.insert(clientkeys, key({ modkey }, "m", function (c) c.maximized_horizontal = not c.maximized_horizontal
+                                                           c.maximized_vertical = not c.maximized_vertical end))
+table.insert(clientkeys, key({ modkey }, "f", function (c) c.fullscreen = not c.fullscreen end))
+table.insert(clientkeys, key({ modkey, "Shift" }, "c", function (c) c:kill() end))
+table.insert(clientkeys, key({ modkey, "Control" }, "space", awful.client.floating.toggle))
+table.insert(clientkeys, key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end))
+table.insert(clientkeys, key({ modkey }, "o", awful.client.movetoscreen))
+table.insert(clientkeys, key({ modkey, "Shift" }, "r", function (c) c:redraw() end))
 
 -- Layout manipulation
-keybinding({ modkey }, "l", function () awful.tag.incmwfact(0.05) end):add()
-keybinding({ modkey }, "h", function () awful.tag.incmwfact(-0.05) end):add()
-keybinding({ modkey, "Shift" }, "h", function () awful.tag.incnmaster(1) end):add()
-keybinding({ modkey, "Shift" }, "l", function () awful.tag.incnmaster(-1) end):add()
-keybinding({ modkey, "Control" }, "h", function () awful.tag.incncol(1) end):add()
-keybinding({ modkey, "Control" }, "l", function () awful.tag.incncol(-1) end):add()
-keybinding({ modkey }, "space", function () awful.layout.inc(layouts, 1) end):add()
-keybinding({ modkey, "Shift" }, "space", function () awful.layout.inc(layouts, -1) end):add()
+table.insert(globalkeys, key({ modkey }, "l", function () awful.tag.incmwfact(0.05) end))
+table.insert(globalkeys, key({ modkey }, "h", function () awful.tag.incmwfact(-0.05) end))
+table.insert(globalkeys, key({ modkey, "Shift" }, "h", function () awful.tag.incnmaster(1) end))
+table.insert(globalkeys, key({ modkey, "Shift" }, "l", function () awful.tag.incnmaster(-1) end))
+table.insert(globalkeys, key({ modkey, "Control" }, "h", function () awful.tag.incncol(1) end))
+table.insert(globalkeys, key({ modkey, "Control" }, "l", function () awful.tag.incncol(-1) end))
+table.insert(globalkeys, key({ modkey }, "space", function () awful.layout.inc(layouts, 1) end))
+table.insert(globalkeys, key({ modkey, "Shift" }, "space", function () awful.layout.inc(layouts, -1) end))
 
 -- Prompt
-keybinding({ modkey }, "F1", function ()
-    awful.prompt.run({ prompt = "Run: " }, mypromptbox[mouse.screen], awful.util.spawn, awful.completion.bash,
-    awful.util.getdir("cache") .. "/history")
-end):add()
+table.insert(globalkeys, key({ modkey }, "F1", function ()
+                                                    awful.prompt.run({ prompt = "Run: " },
+                                                                     mypromptbox[mouse.screen],
+                                                                     awful.util.spawn, awful.completion.bash,
+                                                                     awful.util.getdir("cache") .. "/history")
+                                               end))
 
-keybinding({ modkey, "Ctrl" }, "i", function ()
-    local s = mouse.screen
-    if mypromptbox[s].text then
-        mypromptbox[s].text = nil
-    else
-        mypromptbox[s].text = nil
-        if client.focus.class then
-            mypromptbox[s].text = "Class: " .. client.focus.class .. " "
-        end
-        if client.focus.instance then
-            mypromptbox[s].text = mypromptbox[s].text .. "Instance: ".. client.focus.instance .. " "
-        end
-        if client.focus.role then
-            mypromptbox[s].text = mypromptbox[s].text .. "Role: ".. client.focus.role
-        end
-    end
-end):add()
-
--- Rename
-keybinding({ modkey }, "r", function ()
-    awful.prompt.run({ prompt = "Rename: " }, mypromptbox[mouse.screen], function (str)
-        if #str > 0 then
-            for s = 1, screen.count() do
-                awful.tag.selected(s).name = string.match(awful.tag.selected(s).name, '.') .. "=" .. str
-            end
-        end
-    end, nil,
-    os.getenv("HOME") .. "/.cache/awesome/history_rename")
-end):add()
-
--- Run apps
-keybinding({ modkey }, "F2", function () awful.spawn("claws-mail") end):add()
-keybinding({ modkey }, "F3", function () awful.spawn("firefox") end):add()
-keybinding({ modkey }, "F4", function () awful.spawn("xterm") end):add()
-keybinding({ modkey }, "F5", function () awful.spawn("gvim") end):add()
-keybinding({ modkey }, "F12", function () awful.spawn("alock -auth pam -bg blank:color=yellow") end):add()
-keybinding({ modkey }, "c", function () awful.spawn("echo > ~/.config/awesome/active") end):add()
-keybinding({ modkey }, "w", function () awful.spawn("fbsetbg -r ~/wallpaper/current/") end):add()
-keybinding({ modkey }, "p", function () awful.spawn("mpc toggle") end):add()
-
+-- More programs
+table.insert(globalkeys, key({ modkey }, "F2", function () awful.util.spawn("claws-mail") end))
+table.insert(globalkeys, key({ modkey }, "F3", function () awful.util.spawn("firefox") end))
+table.insert(globalkeys, key({ modkey }, "F4", function () awful.util.spawn("xterm") end))
+table.insert(globalkeys, key({ modkey }, "F5", function () awful.util.spawn("gvim") end))
+table.insert(globalkeys, key({ modkey }, "F12", function () awful.util.spawn("alock -auth pam -bg blank:color=yellow") end))
+table.insert(globalkeys, key({ modkey }, "p", function () awful.util.spawn("mpc toggle") end))
+table.insert(globalkeys, key({ modkey }, "w", function () awful.util.spawn("fbsetbg -r ~/wallpaper/current/") end))
+--
 -- Client awful tagging: this is useful to tag some clients and then do stuff like move to tag on them
-keybinding({ modkey }, "t", awful.client.togglemarked):add()
+table.insert(clientkeys, key({ modkey }, "t", awful.client.togglemarked))
 
 for i = 1, keynumber do
-    keybinding({ modkey, "Shift" }, "F" .. i, function ()
-        local screen = mouse.screen
-        if tags[screen][i] then
-            for k, c in pairs(awful.client.getmarked()) do
-                awful.client.movetotag(tags[screen][i], c)
-            end
-        end
-    end):add()
+    table.insert(globalkeys, key({ modkey, "Shift" }, "F" .. i,
+                 function ()
+                     local screen = mouse.screen
+                     if tags[screen][i] then
+                         for k, c in pairs(awful.client.getmarked()) do
+                             awful.client.movetotag(tags[screen][i], c)
+                         end
+                     end
+                 end))
 end
+
+-- Set keys
+root.keys(globalkeys)
 -- }}}
 
 -- {{{ Hooks
@@ -325,10 +319,21 @@ end)
 -- Hook function to execute when the mouse enters a client.
 awful.hooks.mouse_enter.register(function (c)
     -- Sloppy focus, but disabled for magnifier layout
+    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+        and awful.client.focus.filter(c) then
+        client.focus = c
+    end
 end)
 
 -- Hook function to execute when a new client appears.
-awful.hooks.manage.register(function (c)
+awful.hooks.manage.register(function (c, startup)
+    -- If we are not managing this application at startup,
+    -- move it to the screen where the mouse is.
+    -- We only do it for filtered windows (i.e. no dock, etc).
+    if not startup and awful.client.focus.filter(c) then
+        c.screen = mouse.screen
+    end
+
     if use_titlebar then
         -- Add a titlebar
         awful.titlebar.add(c, { modkey = modkey })
@@ -336,8 +341,8 @@ awful.hooks.manage.register(function (c)
     -- Add mouse bindings
     c:buttons({
         button({ }, 1, function (c) client.focus = c; c:raise() end),
-        button({ modkey }, 1, function (c) c:mouse_move() end),
-        button({ modkey }, 3, function (c) c:mouse_resize() end)
+        button({ modkey }, 1, awful.mouse.client.move),
+        button({ modkey }, 3, awful.mouse.client.resize)
     })
     -- New client may not receive focus
     -- if they're not focusable, so set border anyway.
@@ -348,9 +353,9 @@ awful.hooks.manage.register(function (c)
     local cls = c.class
     local inst = c.instance
     if floatapps[cls] then
-        c.floating = floatapps[cls]
+        awful.client.floating.set(c, floatapps[cls])
     elseif floatapps[inst] then
-        c.floating = floatapps[inst]
+        awful.client.floating.set(c, floatapps[inst])
     end
 
     -- Check application->screen/tag mappings.
@@ -368,19 +373,22 @@ awful.hooks.manage.register(function (c)
     -- Do this after tag mapping, so you don't see it on the wrong tag for a split second.
     client.focus = c
 
+    -- Set key bindings
+    c:keys(clientkeys)
+
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
     -- awful.client.setslave(c)
 
     -- Honor size hints: if you want to drop the gaps between windows, set this to false.
-    -- c.honorsizehints = false
+    -- c.size_hints_honor = false
 end)
 
 -- Hook function to execute when arranging the screen.
 -- (tag switch, new client, etc)
 awful.hooks.arrange.register(function (screen)
-    local layout = awful.layout.get(screen)
-    if layout then
+    local layout = awful.layout.getname(awful.layout.get(screen))
+    if layout and beautiful["layout_" ..layout] then
         mylayoutbox[screen].image = image(beautiful["layout_" .. layout])
     else
         mylayoutbox[screen].image = nil
@@ -395,23 +403,23 @@ awful.hooks.arrange.register(function (screen)
 end)
 
 -- Hook called every second
-battery_bg=""
+battery_bg="#eeffdd"
 awful.hooks.timer.register(1, function ()
     local f = io.open('/sys/class/power_supply/BAT1/status')
     if f then
         local l = f:lines()
         for line in l do
             if line == 'Charging' then
-                battery_bg="color='#fce94f'"
+                battery_bg="#fce94f"
             elseif line == 'Discharging' then
-                battery_bg="color='#fca94f'"
+                battery_bg="#fca94f"
             else
                 battery_bg=""
             end
         end
         f:close()
     else
-        battery_bg="color='#fc4f4f'"
+        battery_bg="#fc4f4f"
     end
 
     if os.time() % 5 == 0 then
@@ -430,11 +438,14 @@ awful.hooks.timer.register(1, function ()
         end
         m:close()
     end
-    mytextbox.text = " <bg " .. battery_bg .. ">" .. os.date() .. "</bg> "
+    mytextbox.text = " " .. os.date() .. " "
+    mytextbox.bg = battery_bg
+
     if string.len(active_text) == 0 then
         myactivebox.text = ""
     else
-        myactivebox.text = " <bg color='#fce94f'>" .. active_text .. "</bg> "
+        myactivebox.text = " " .. active_text .. " "
+        myactivebox.bg = "#fce94f"
     end
 end)
 -- }}}
