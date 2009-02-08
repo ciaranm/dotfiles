@@ -86,8 +86,8 @@ mytextbox = widget({ type = "textbox", align = "right" })
 -- Set the default text in textbox
 mytextbox.text = "<b><small> " .. AWESOME_RELEASE .. " </small></b>"
 
------!!! myactivebox = widget({ type = "textbox", align = "right" })
------!!! myactivebox.text = ""
+myactivebox = widget({ type = "textbox", align = "right" })
+myactivebox.text = ""
 
 -- Create a laucher widget and a main menu
 myawesomemenu = {
@@ -150,7 +150,7 @@ for s = 1, screen.count() do
                            mypromptbox[s],
                            mytaglist[s],
                            mytasklist[s],
------!!!                           myactivebox,
+                           myactivebox,
                            mytextbox,
                            s == 1 and mysystray or nil,
                            mylayoutbox[s] }
