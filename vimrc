@@ -456,7 +456,6 @@ if has("autocmd") && has("eval")
                             \ " --localstatedir=/var/lib --enable-qa " .
                             \ " --enable-ruby --enable-python --enable-xml --enable-vim --enable-bash-completion" .
                             \ " --enable-zsh-completion --with-repositories=default,unpackaged,unavailable,accounts" .
-                            \ " --with-clients=default,importare,inquisitio,accerso,cave,instruo,qualudis,reconcilio" .
                             \ " --with-environments=all --enable-doxygen" .
                             \ " --enable-visibility --enable-gnu-ldconfig --enable-htmltidy" .
                             \ " --enable-ruby-doc --enable-python-doc"
