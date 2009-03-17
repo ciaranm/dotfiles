@@ -153,8 +153,12 @@ alias pp="popd"
 # }}}
 
 # {{{ Completion, history
-[[ -f /etc/profile.d/bash-completion ]] && \
-    source /etc/profile.d/bash-completion
+for a in /etc/profile.d/bash-completion{,.sh} ; do
+    if [[ -f "${a}" ]] ; then
+        source "${a}"
+        break
+    fi
+done
 export COMP_WORDBREAKS=${COMP_WORDBREAKS/:/}
 
 export FIGNORE='~'
