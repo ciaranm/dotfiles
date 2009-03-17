@@ -454,11 +454,11 @@ if has("autocmd") && has("eval")
             if hostname() == "snowmobile"
                 let g:paludis_configure_command = "! ./configure --prefix=/usr --sysconfdir=/etc" .
                             \ " --localstatedir=/var/lib --enable-qa " .
-                            \ " --enable-ruby --enable-python --enable-xml --enable-vim --enable-bash-completion" .
+                            \ " --enable-ruby --disable-python --enable-xml --enable-vim --enable-bash-completion" .
                             \ " --enable-zsh-completion --with-repositories=default,unpackaged,unavailable,accounts" .
                             \ " --with-environments=all --with-clients=all --enable-doxygen" .
                             \ " --enable-visibility --enable-gnu-ldconfig --enable-htmltidy" .
-                            \ " --enable-ruby-doc --enable-python-doc"
+                            \ " --enable-ruby-doc --disable-python-doc"
             else
                 let g:paludis_configure_command = "! ./configure --prefix=/usr --sysconfdir=/etc" .
                             \ " --localstatedir=/var/lib --enable-qa " .
