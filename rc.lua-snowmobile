@@ -421,7 +421,7 @@ awful.hooks.timer.register(1, function ()
             elseif line == 'Discharging' then
                 battery_bg="#fca94f"
             else
-                battery_bg=""
+                battery_bg="#729fcf"
             end
         end
         f:close()
