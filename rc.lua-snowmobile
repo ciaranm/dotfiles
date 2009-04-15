@@ -410,23 +410,80 @@ awful.hooks.arrange.register(function (screen)
 end)
 
 -- Hook called every second
-battery_bg="#eeffdd"
+battery_bg="#333333"
+battery_text=""
 awful.hooks.timer.register(1, function ()
     local f = io.open('/sys/class/power_supply/BAT1/status')
     if f then
         local l = f:lines()
         for line in l do
             if line == 'Charging' then
-                battery_bg="#fce94f"
+                local e_now = 0
+                local e_full = 1
+                local g = io.open('/sys/class/power_supply/BAT1/energy_now')
+                local h = io.open('/sys/class/power_supply/BAT1/energy_full')
+                for iline in g:lines() do
+                    e_now = iline
+                end
+                for iline in h:lines() do
+                    e_full = iline
+                end
+                g:close()
+                h:close()
+
+                local e_perc = ((e_now + 0) * 100) / (e_full + 0)
+                if e_perc >= 90 then
+                    battery_bg = "#e9fc9f"
+                elseif e_perc >= 70 then
+                    battery_bg = "#c9fc7f"
+                elseif e_perc >= 50 then
+                    battery_bg = "#a9fc5f"
+                elseif e_perc >= 30 then
+                    battery_bg = "#79fc3f"
+                elseif e_perc >= 10 then
+                    battery_bg = "#59fc0f"
+                else
+                    battery_bg = "#29fc4f"
+                end
+                battery_text = "" .. math.floor(e_perc) .. "%"
             elseif line == 'Discharging' then
-                battery_bg="#fca94f"
+                local e_now = 0
+                local e_full = 1
+                local g = io.open('/sys/class/power_supply/BAT1/energy_now')
+                local h = io.open('/sys/class/power_supply/BAT1/energy_full')
+                for iline in g:lines() do
+                    e_now = iline
+                end
+                for iline in h:lines() do
+                    e_full = iline
+                end
+                g:close()
+                h:close()
+
+                local e_perc = ((e_now + 0) * 100) / (e_full + 0)
+                if e_perc >= 90 then
+                    battery_bg = "#fce99f"
+                elseif e_perc >= 70 then
+                    battery_bg = "#fcc97f"
+                elseif e_perc >= 50 then
+                    battery_bg = "#fca95f"
+                elseif e_perc >= 30 then
+                    battery_bg = "#fc793f"
+                elseif e_perc >= 10 then
+                    battery_bg = "#fc590f"
+                else
+                    battery_bg = "#fc294f"
+                end
+                battery_text = "" .. math.floor(e_perc) .. "%"
             else
                 battery_bg="#729fcf"
+                battery_text=""
             end
         end
         f:close()
     else
-        battery_bg="#fc4f4f"
+        battery_bg="#ff0000"
+        battery_text="No Battery"
     end
 
     if os.time() % 5 == 0 then
@@ -445,14 +502,14 @@ awful.hooks.timer.register(1, function ()
         end
         m:close()
     end
-    mytextbox.text = " " .. os.date() .. " "
+    mytextbox.text = " " .. os.date() .. " " .. battery_text .. " "
     mytextbox.bg = battery_bg
 
     if string.len(active_text) == 0 then
         myactivebox.text = ""
     else
         myactivebox.text = " " .. active_text .. " "
-        myactivebox.bg = "#fce94f"
+        myactivebox.bg = "#ffffcc"
     end
 end)
 -- }}}

@@ -1,3 +1,4 @@
+# This started out life as:
 -------------------------------
 --    "Sky" awesome theme    --
 --  By Andrei "Garoth" Thorp --
@@ -7,18 +8,18 @@
 # BASICS
 font          = sans 6
 
-bg_focus      = #e2eeea
-bg_normal      = #729fcf
-bg_urgent     = #fce94f
+bg_focus      = #cccccc
+bg_normal      = #999999
+bg_urgent     = #ffffff
 
-fg_normal     = #2e3436
-fg_focus      = #2e3436
-fg_urgent     = #2e3436
+fg_normal     = #666666
+fg_focus      = #333333
+fg_urgent     = #000000
 
-border_width  = 2
-border_normal = #dae3e0
-border_focus  = #729fcf
-border_marked = #eeeeec
+border_width  = 1
+border_normal = #333333
+border_focus  = #666666
+border_marked = #cccccc
 
 # IMAGES
 layout_dwindle = /usr/share/awesome/themes/sky/layouts/dwindle.png
