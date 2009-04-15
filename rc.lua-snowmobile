@@ -476,7 +476,7 @@ awful.hooks.timer.register(1, function ()
                 end
                 battery_text = "" .. math.floor(e_perc) .. "%"
             else
-                battery_bg="#729fcf"
+                battery_bg="#999999"
                 battery_text=""
             end
         end
