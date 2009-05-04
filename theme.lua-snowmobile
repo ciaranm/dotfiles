@@ -1,0 +1,58 @@
+-------------------------------
+-- This started out life as: --
+--    "Sky" awesome theme    --
+--  By Andrei "Garoth" Thorp --
+-- If you want SVGs and extras, get them from garoth.com/awesome/sky-theme
+
+-- BASICS
+theme = {}
+theme.font          = "sans 6"
+
+theme.bg_focus      = "#cccccc"
+theme.bg_normal     = "#999999"
+theme.bg_urgent     = "#ffffff"
+theme.bg_minimize   = "#666666"
+
+theme.fg_normal     = "#666666"
+theme.fg_focus      = "#333333"
+theme.fg_urgent     = "#000000"
+theme.fg_minimize   = "#666666"
+
+theme.border_width  = "1"
+theme.border_normal = "#333333"
+theme.border_focus  = "#666666"
+theme.border_marked = "#cccccc"
+
+-- IMAGES
+theme.layout_fairh           = "/usr/share/awesome/themes/sky/layouts/fairh.png"
+theme.layout_fairv           = "/usr/share/awesome/themes/sky/layouts/fairv.png"
+theme.layout_floating        = "/usr/share/awesome/themes/sky/layouts/floating.png"
+theme.layout_magnifier       = "/usr/share/awesome/themes/sky/layouts/magnifier.png"
+theme.layout_max             = "/usr/share/awesome/themes/sky/layouts/max.png"
+theme.layout_fullscreen      = "/usr/share/awesome/themes/sky/layouts/fullscreen.png"
+theme.layout_tilebottom      = "/usr/share/awesome/themes/sky/layouts/tilebottom.png"
+theme.layout_tileleft        = "/usr/share/awesome/themes/sky/layouts/tileleft.png"
+theme.layout_tile            = "/usr/share/awesome/themes/sky/layouts/tile.png"
+theme.layout_tiletop         = "/usr/share/awesome/themes/sky/layouts/tiletop.png"
+
+theme.awesome_icon           = "/usr/share/awesome/themes/sky/awesome-icon.png"
+theme.tasklist_floating_icon = "/usr/share/awesome/themes/sky/layouts/floating.png"
+
+-- from default for now...
+theme.menu_submenu_icon     = "/usr/share/awesome/themes/default/submenu.png"
+theme.taglist_squares_sel   = "/usr/share/awesome/themes/default/taglist/squarefw.png"
+theme.taglist_squares_unsel = "/usr/share/awesome/themes/default/taglist/squarew.png"
+
+-- MISC
+theme.wallpaper_cmd         = { "sh -c 'find ~/wallpaper/current/ -type f | shuf -n1 | xargs feh --bg-scale'" }
+theme.taglist_squares       = "true"
+theme.titlebar_close_button = "true"
+theme.menu_height           = "15"
+theme.menu_width            = "100"
+
+-- Define the image to load
+theme.titlebar_close_button_normal = "/usr/share/awesome/themes/default/titlebar/close.png"
+theme.titlebar_close_button_focus  = "/usr/share/awesome/themes/default/titlebar/closer.png"
+
+return theme
+-- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=80

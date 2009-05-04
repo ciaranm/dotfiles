@@ -12,7 +12,7 @@ require("beautiful")
 require("naughty")
 
 -- {{{ Variable definitions
-theme_path = ".config/awesome/theme"
+theme_path = ".config/awesome/theme.lua"
 beautiful.init(theme_path)
 
 -- This is used later as the default terminal and editor to run.
@@ -69,10 +69,12 @@ for s = 1, screen.count() do
     tags[s] = {}
     -- Create 9 tags per screen.
     tagnames = { "1", "2=email", "3=web", "4=irc", "5=paludis", "6=media", "7", "8", "9" }
+    -- Create 9 tags per screen.
     for tagnumber = 1, 9 do
-        tags[s][tagnumber] = tag({ name = tagnames[tagnumber], layout = layouts[1] })
+        tags[s][tagnumber] = tag(tagnumber)
         -- Add tags to screen one by one
         tags[s][tagnumber].screen = s
+        tags[s][tagnumber].name = tagnames[tagnumber]
         awful.layout.set(layouts[1], tags[s][tagnumber])
     end
     -- I'm sure you want to see at least one tag.
@@ -84,7 +86,7 @@ end
 -- Create a textbox widget
 mytextbox = widget({ type = "textbox", align = "right" })
 -- Set the default text in textbox
-mytextbox.text = "<b><small> " .. AWESOME_RELEASE .. " </small></b>"
+mytextbox.text = "..."
 
 myactivebox = widget({ type = "textbox", align = "right" })
 myactivebox.text = ""
@@ -270,7 +272,7 @@ table.insert(globalkeys, key({ modkey }, "F4", function () awful.util.spawn("xte
 table.insert(globalkeys, key({ modkey }, "F5", function () awful.util.spawn("gvim") end))
 table.insert(globalkeys, key({ modkey }, "F12", function () awful.util.spawn("alock -auth pam -bg blank:color=yellow") end))
 table.insert(globalkeys, key({ modkey }, "p", function () awful.util.spawn("mpc toggle") end))
-table.insert(globalkeys, key({ modkey }, "w", function () awful.util.spawn("find ~/wallpaper/current/ -type f | shuf -n1 | xargs feh --bg-scale") end))
+table.insert(globalkeys, key({ modkey }, "w", function () awful.util.spawn("sh -c 'find ~/wallpaper/current/ -type f | shuf -n1 | xargs feh --bg-scale'") end))
 
 -- Rename
 table.insert(globalkeys, key({ modkey }, "r", function ()

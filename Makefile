@@ -11,7 +11,7 @@ CONFIGS = \
 	conkyrc-snowcone \
 	xbindkeysrc-snowcone \
 	rc.lua-snowmobile \
-	theme-snowmobile
+	theme.lua-snowmobile
 
 default : all
 
@@ -41,8 +41,8 @@ install-file-xbindkeysrc-snowcone : xbindkeysrc-snowcone
 install-file-rc.lua-snowmobile : rc.lua-snowmobile
 	test `hostname` != 'snowmobile' || install $< $(HOME)/.config/awesome/rc.lua
 
-install-file-theme-snowmobile : theme-snowmobile
-	test `hostname` != 'snowmobile' || install $< $(HOME)/.config/awesome/theme
+install-file-theme.lua-snowmobile : theme.lua-snowmobile
+	test `hostname` != 'snowmobile' || install $< $(HOME)/.config/awesome/theme.lua
 
 install: $(foreach f, $(CONFIGS), install-file-$(f) )
 
