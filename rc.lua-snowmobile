@@ -272,7 +272,7 @@ table.insert(globalkeys, key({ modkey }, "F4", function () awful.util.spawn("xte
 table.insert(globalkeys, key({ modkey }, "F5", function () awful.util.spawn("gvim") end))
 table.insert(globalkeys, key({ modkey }, "F12", function () awful.util.spawn("alock -auth pam -bg blank:color=yellow") end))
 table.insert(globalkeys, key({ modkey }, "p", function () awful.util.spawn("mpc toggle") end))
-table.insert(globalkeys, key({ modkey }, "w", function () awful.util.spawn("sh -c 'find ~/wallpaper/current/ -type f | shuf -n1 | xargs feh --bg-scale'") end))
+table.insert(globalkeys, key({ modkey }, "w", function () awful.util.spawn("sh -c 'find $HOME/wallpaper/current/ -type f | shuf -n1 | xargs feh --bg-scale'") end))
 
 -- Rename
 table.insert(globalkeys, key({ modkey }, "r", function ()
