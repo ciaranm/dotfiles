@@ -2,9 +2,7 @@ CONFIGS = \
 	Makefile \
 	Xdefaults \
 	bashrc \
-	inkpot.vim \
 	screenrc \
-	securemodelines.vim \
 	toprc \
 	vimrc \
 	conkyrc-snowmobile \
@@ -22,12 +20,6 @@ clean :
 
 install-file-% : %
 	install $* $(HOME)/.$*
-
-install-file-inkpot.vim : inkpot.vim
-	install $< $(HOME)/.vim/colors/$<
-
-install-file-securemodelines.vim : securemodelines.vim
-	install $< $(HOME)/.vim/plugin/$<
 
 install-file-conkyrc-snowmobile : conkyrc-snowmobile
 	test `hostname` != 'snowmobile' || install $< $(HOME)/.conkyrc
