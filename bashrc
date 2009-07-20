@@ -451,6 +451,7 @@ esac
 
 cache_colour_usr=${cache_colour_l_yell}
 cache_colour_cwd=${cache_colour_m_gren}
+cache_colour_wrk=${cache_colour_m_teal}
 cache_colour_rok=${cache_colour_l_yell}
 cache_colour_rer=${cache_colour_m_orng}
 cache_colour_job=${cache_colour_l_pink}
@@ -477,6 +478,14 @@ esac
 # }}}
 
 # {{{ Prompt
+ps_wrk_f() {
+    if [[ "${PWD/ciaranm\/snow}" != "${PWD}" ]] ; then
+        local p="snow${PWD#*/ciaranm/snow}"
+        p="${p%%/*}"
+        echo "@${p}"
+    fi
+}
+
 ps_retc_f() {
     if [[ ${1} -eq 0 ]] ; then
         echo -e "${cache_colour_rok}"
@@ -571,7 +580,7 @@ ps_scm_f() {
 
 ps_usr="\[${cache_colour_usr}\]\u@"
 ps_hst="\[${cache_colour_hst}\]\h "
-ps_cwd="\[${cache_colour_cwd}\]\W "
+ps_cwd="\[${cache_colour_cwd}\]\W\[${cache_colour_wrk}\]\$(ps_wrk_f) "
 ps_mrk="\[${cache_colour_mrk}\]\$ "
 ps_end="\[${cache_colour_end}\]"
 ps_ret='\[$(ps_retc_f $?)\]$? '
