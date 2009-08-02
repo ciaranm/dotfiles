@@ -527,7 +527,7 @@ ps_scm_f() {
         local r=$(svn info | sed -n -e '/^Revision: \([0-9]*\).*$/s//\1/p' )
         s="(r$r$(svn status | grep -q -v '^?' && echo -n "*" ))"
     else
-        local d=$(git rev-parse --git-dir 2>/dev/null ) b= r= a= c=
+        local d=$(git rev-parse --git-dir 2>/dev/null ) b= r= a= c= e=
         if [[ -n "${d}" ]] ; then
             if [[ -d "${d}/../.dotest" ]] ; then
                 if [[ -f "${d}/../.dotest/rebase" ]] ; then
@@ -567,10 +567,17 @@ ps_scm_f() {
                 a="${a}?"
             fi
 
+            e=$(git status | sed -n -e '/^# Your branch is ahead of /s/.* by \(.*\) commit.*/\1/p' )
+            if [[ -n ${e} ]] ; then
+                e="+${e}"
+            else
+                e=
+            fi
+
             b=${b#refs/heads/}
             b=${b// }
             [[ -n "${b}" ]] && c="$(git config "branch.${b}.remote" 2>/dev/null )"
-            [[ -n "${r}${b}${c}${a}" ]] && s="(${r:+${r}:}${b}${c:+@${c}}${a:+ ${a}})"
+            [[ -n "${r}${b}${c}${a}" ]] && s="(${r:+${r}:}${b}${c:+@${c}}${e}${a:+ ${a}})"
         fi
     fi
     s="${s}${ACTIVE_COMPILER}"
