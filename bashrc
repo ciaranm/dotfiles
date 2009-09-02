@@ -255,7 +255,7 @@ xt() {
 }
 
 xa() {
-    echo $$ $1 >> ~/.config/awesome/active
+    echo $$ $1 $2 >> ~/.config/awesome/active
     "$@"
     sed -e "/^$$ /d" -i ~/.config/awesome/active
 }
