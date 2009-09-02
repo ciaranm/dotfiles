@@ -585,18 +585,19 @@ ps_scm_f() {
     echo -n "$s"
 }
 
+PROMPT_COMMAND="export prompt_exit_status=\$? ; $PROMPT_COMMAND"
 ps_usr="\[${cache_colour_usr}\]\u@"
 ps_hst="\[${cache_colour_hst}\]\h "
 ps_cwd="\[${cache_colour_cwd}\]\W\[${cache_colour_wrk}\]\$(ps_wrk_f) "
 ps_mrk="\[${cache_colour_mrk}\]\$ "
 ps_end="\[${cache_colour_end}\]"
-ps_ret='\[$(ps_retc_f $?)\]$? '
+ps_ret='\[$(ps_retc_f $prompt_exit_status)\]$prompt_exit_status '
 ps_job="\[${cache_colour_job}\]\$(ps_job_f)"
 ps_lda="\[${cache_colour_lda}\]\$(ps_lda_f)"
 ps_dir="\[${cache_colour_dir}\]\$(ps_dir_f)"
 ps_scr="\[${cache_colour_scr}\]\$(ps_scr_f)"
 ps_scm="\[${cache_colour_scm}\]\$(ps_scm_f)"
-export PS1="${ps_usr}${ps_hst}${ps_cwd}${ps_ret}${ps_lda}${ps_job}${ps_dir}${ps_scr}${ps_scm}"
+export PS1="${ps_sav}${ps_usr}${ps_hst}${ps_cwd}${ps_ret}${ps_lda}${ps_job}${ps_dir}${ps_scr}${ps_scm}"
 export PS1="${PS1}${ps_mrk}${ps_end}"
 # }}}
 
