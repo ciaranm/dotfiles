@@ -60,7 +60,7 @@ ${tail /var/log/messages 3 60}
 
 ${color lightgoldenrod}Music${color}
   MPD ${tab 70 0} ${mpd_bar 7,200}
-      ${tab 70 0} ${mpd_track} {mpd_smart}
+      ${tab 70 0} ${mpd_track} ${mpd_smart}
 
 ${color lightgoldenrod}Power${color}
   bat1 ${tab 70 0} ${battery BAT1} ${battery_time BAT1}
