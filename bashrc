@@ -527,7 +527,7 @@ ps_scm_f() {
         local r=$(svn info | sed -n -e '/^Revision: \([0-9]*\).*$/s//\1/p' )
         s="(r$r$(svn status | grep -q -v '^?' && echo -n "*" ))"
     else
-        local d=$(git rev-parse --git-dir 2>/dev/null ) b= r= a= c= e=
+        local d=$(git rev-parse --git-dir 2>/dev/null ) b= r= a= c= e= f= g=
         if [[ -n "${d}" ]] ; then
             if [[ -d "${d}/../.dotest" ]] ; then
                 if [[ -f "${d}/../.dotest/rebase" ]] ; then
@@ -567,9 +567,15 @@ ps_scm_f() {
                 a="${a}?"
             fi
 
-            e=$(git status | sed -n -e '/^# Your branch is ahead of /s/.* by \(.*\) commit.*/\1/p' )
+            e=$(git status | sed -n -e '/^# Your branch is /s/^.*\(ahead\|behind\).* by \(.*\) commit.*/\1 \2/p' )
             if [[ -n ${e} ]] ; then
-                e="+${e}"
+                f=${e#* }
+                g=${e% *}
+                if [[ ${g} == "ahead" ]] ; then
+                    e="+${f}"
+                else
+                    e="-${f}"
+                fi
             else
                 e=
             fi
