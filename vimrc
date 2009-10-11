@@ -451,22 +451,12 @@ if has("autocmd") && has("eval")
             autocmd QuickFixCmdPre make
                         \ let g:make_start_time=localtime()
 
-            if hostname() == "snowmobile"
-                let g:paludis_configure_command = "! ./configure --prefix=/usr --sysconfdir=/etc" .
-                            \ " --localstatedir=/var/lib --enable-qa " .
-                            \ " --enable-ruby --disable-python --enable-xml --enable-vim --enable-bash-completion" .
-                            \ " --enable-zsh-completion --with-repositories=default,unpackaged,unavailable,accounts" .
-                            \ " --with-environments=all --with-clients=all --enable-doxygen" .
-                            \ " --enable-visibility --enable-gnu-ldconfig --enable-htmltidy" .
-                            \ " --enable-ruby-doc --disable-python-doc"
-            else
-                let g:paludis_configure_command = "! ./configure --prefix=/usr --sysconfdir=/etc" .
-                            \ " --localstatedir=/var/lib --enable-qa " .
-                            \ " --enable-ruby --enable-python --enable-vim --enable-bash-completion" .
-                            \ " --enable-zsh-completion --with-repositories=all --with-clients=all --with-environments=all" .
-                            \ " --enable-visibility --enable-gnu-ldconfig --enable-htmltidy" .
-                            \ " --enable-ruby-doc --enable-python-doc --enable-xml"
-            endif
+            let g:paludis_configure_command = "! ./configure --prefix=/usr --sysconfdir=/etc" .
+                        \ " --localstatedir=/var/lib --enable-qa " .
+                        \ " --enable-ruby --enable-python --enable-vim --enable-bash-completion" .
+                        \ " --enable-zsh-completion --with-repositories=all --with-clients=all --with-environments=all" .
+                        \ " --enable-visibility --enable-gnu-ldconfig --enable-htmltidy" .
+                        \ " --enable-ruby-doc --enable-python-doc --enable-xml"
 
             " Similarly, try to automatically run ./configure and / or
             " autogen if necessary.
