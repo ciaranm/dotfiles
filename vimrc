@@ -562,6 +562,9 @@ if has("eval")
     nmap     <C-w>!   :Kwbd<CR>
 endif
 
+" Next buffer
+nmap <C-w>. :bn<CR>
+
 " quickfix things
 nmap <Leader>cwc :cclose<CR>
 nmap <Leader>cwo :botright copen 5<CR><C-w>p
