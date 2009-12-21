@@ -68,7 +68,7 @@ for s = 1, screen.count() do
     -- Each screen has its own tag table.
     tags[s] = {}
     -- Create 9 tags per screen.
-    tagnames = { "1", "2=email", "3=web", "4=irc", "5=paludis", "6=media", "7", "8", "9" }
+    tagnames = { "1=temp", "2=mail", "3=web", "4=irc", "5=code", "6=media", "7", "8", "9=dl" }
     -- Create 9 tags per screen.
     for tagnumber = 1, 9 do
         tags[s][tagnumber] = tag(tagnumber)
@@ -267,7 +267,8 @@ table.insert(globalkeys, key({ modkey }, "F1", function ()
 
 -- More programs
 table.insert(globalkeys, key({ modkey }, "F2", function () awful.util.spawn("claws-mail") end))
-table.insert(globalkeys, key({ modkey }, "F3", function () awful.util.spawn("firefox") end))
+table.insert(globalkeys, key({ modkey }, "F3", function () awful.util.spawn("firefox -P default") end))
+table.insert(globalkeys, key({ modkey, "Shift" }, "F3", function () awful.util.spawn("firefox -P other") end))
 table.insert(globalkeys, key({ modkey }, "F4", function () awful.util.spawn("xterm") end))
 table.insert(globalkeys, key({ modkey }, "F5", function () awful.util.spawn("gvim") end))
 table.insert(globalkeys, key({ modkey }, "F12", function () awful.util.spawn("alock -auth pam -bg blank:color=yellow") end))
