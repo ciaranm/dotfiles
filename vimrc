@@ -495,7 +495,7 @@ if has("autocmd") && has("eval")
 
             if hostname() == "snowmobile"
                 autocmd QuickFixCmdPre make
-                            \ let g:active_line=getpid() . " vim:" . expand("%:p:h:t") |
+                            \ let g:active_line=getpid() . " vim:" . substitute(getcwd(), "^.*/", "", "") |
                             \ exec "silent !echo '" . g:active_line . "' >> ~/.config/awesome/active"
 
                 autocmd QuickFixCmdPost make
