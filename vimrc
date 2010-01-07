@@ -196,6 +196,7 @@ endif
 set nomodeline
 let g:secure_modelines_verbose = 0
 let g:secure_modelines_modelines = 15
+au VimEnter * call filter(g:secure_modelines_allowed_items, 'v:val != "fdm" && v:val != "foldmethod"')
 
 " Nice statusbar
 set laststatus=2
