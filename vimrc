@@ -602,8 +602,8 @@ nmap <silent> <F3> :silent nohlsearch<CR>
 imap <silent> <F3> <C-o>:silent nohlsearch<CR>
 nmap <F4> :Kwbd<CR>
 nmap <F5> <C-w>c
-nmap <F6> :exec "make check TESTS_ENVIRONMENT=true my_XFAIL_TESTS="<CR>
-nmap <Leader><F6> :exec "make -C " . expand("%:p:h") . " check TESTS_ENVIRONMENT=true my_XFAIL_TESTS="<CR>
+nmap <F6> :exec "make check TESTS_ENVIRONMENT=true LOG_COMPILER=true XFAIL_TESTS="<CR>
+nmap <Leader><F6> :exec "make -C " . expand("%:p:h") . " check TESTS_ENVIRONMENT=true LOG_COMPILER=true XFAIL_TESTS="<CR>
 nmap <F7> :make all-then-check<CR>
 nmap <Leader><F7> :exec "make -C " . expand("%:p:h") . " check"<CR>
 nmap <F8> :make<CR>
