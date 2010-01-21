@@ -35,11 +35,13 @@ ${color lightgoldenrod}Filesystems${color}
   ~ ${tab 70 0} ${fs_bar 7,200 /home}
 
 ${color lightgoldenrod}Network${color}
-  eth0 ${tab 70 0} ${downspeedgraph eth0 20,97} ${upspeedgraph eth0 20,97}
+${if_up eth0}  eth0 ${tab 70 0} ${downspeedgraph eth0 20,97} ${upspeedgraph eth0 20,97}
        ${tab 70 0} ${addrs eth0}
-  eth1 ${tab 70 0} ${downspeedgraph eth1 20,97} ${upspeedgraph eth1 20,97}
+${endif}${if_up eth1}  eth1 ${tab 70 0} ${downspeedgraph eth1 20,97} ${upspeedgraph eth1 20,97}
        ${tab 70 0} ${addrs eth1} ${wireless_essid eth1} ${wireless_bitrate eth1} ${wireless_link_qual_perc eth1}%
-
+${endif}${if_up ppp0}  ppp0 ${tab 70 0} ${downspeedgraph ppp0 20,97} ${upspeedgraph ppp0 20,97}
+       ${tab 70 0} ${addrs ppp0}
+${endif}
 ${color lightgoldenrod}Inbound Connections (${tcp_portmon 1 32767 count})${color}
   ${tcp_portmon 1 32767 lservice 0} ${tab 70 0} ${tcp_portmon 1 32767 rhost 0}
   ${tcp_portmon 1 32767 lservice 1} ${tab 70 0} ${tcp_portmon 1 32767 rhost 1}
@@ -58,10 +60,10 @@ ${color lightgoldenrod}Apps ${color}
 ${color lightgoldenrod}System log${color}
 ${tail /var/log/messages 3 60}
 
-${color lightgoldenrod}Music${color}
+${if_mpd_playing} ${color lightgoldenrod}Music${color}
   MPD ${tab 70 0} ${mpd_bar 7,200}
-      ${tab 70 0} ${mpd_track} ${mpd_smart}
+      ${tab 70 0} ${mpd_status} ${mpd_smart}
 
-${color lightgoldenrod}Power${color}
+${endif}${color lightgoldenrod}Power${color}
   bat1 ${tab 70 0} ${battery BAT1} ${battery_time BAT1}
        ${tab 70 0} ${battery_bar 7,200 BAT1}
