@@ -255,9 +255,12 @@ xt() {
 }
 
 xa() {
+    local retcode
     echo $$ $1 $2 >> ~/.config/awesome/active
     "$@"
+    retcode=$?
     sed -e "/^$$ /d" -i ~/.config/awesome/active
+    return $retcode
 }
 # }}}
 
