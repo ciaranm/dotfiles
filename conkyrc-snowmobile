@@ -13,7 +13,8 @@ default_shade_color grey10
 border_width 0
 gap_x 10
 gap_y 60
-mpd_host 127.0.0.1
+mpd_host localhost
+mpd_port 6600
 
 TEXT
 ${color lightgoldenrod}System${color}
