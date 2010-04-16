@@ -385,13 +385,15 @@ compiler-gcc() {
         export \
             CFLAGS="-O1 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 ${MACHINE_CFLAGS}" \
             CXXFLAGS="-O1 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 ${MACHINE_CXXFLAGS}" \
-            LDFLAGS="-Wl,--as-needed" PATH="/usr/lib/ccache/bin/:${PATH}" \
+            LDFLAGS="-Wl,--as-needed" \
+            PATH="/usr/lib/ccache/bin/:/usr/libexec/ccache/:${PATH}" \
             ACTIVE_COMPILER="+"
     else
         export \
             CFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 ${MACHINE_CFLAGS}" \
             CXXFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 ${MACHINE_CXXFLAGS}" \
-            LDFLAGS="-Wl,--as-needed" PATH="/usr/lib/ccache/bin/:${PATH}" \
+            LDFLAGS="-Wl,--as-needed" \
+            PATH="/usr/lib/ccache/bin/:/usr/libexec/ccache/:${PATH}" \
             ACTIVE_COMPILER="+"
     fi
 }
