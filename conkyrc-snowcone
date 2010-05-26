@@ -13,7 +13,7 @@ default_color grey90
 border_width 0
 gap_x 10
 gap_y 10
-mpd_host 127.0.0.1
+mpd_host localhost
 
 TEXT
 ${color lightgoldenrod}System${color}
@@ -35,16 +35,16 @@ ${color lightgoldenrod}Core Resources${color}
   Rand   ${entropy_bar 7,200}
 
 ${color lightgoldenrod}Processes (CPU) ${color}
-  ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
-  ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
-  ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
-  ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
+  ${top name 1} ${top pid 1} ${top cpu 1}%
+  ${top name 2} ${top pid 2} ${top cpu 2}%
+  ${top name 3} ${top pid 3} ${top cpu 3}%
+  ${top name 4} ${top pid 4} ${top cpu 4}%
 
 ${color lightgoldenrod}Processes (RAM) ${color}
-  ${top_mem name 1} ${top_mem pid 1} ${top_mem mem 1}
-  ${top_mem name 2} ${top_mem pid 2} ${top_mem mem 2}
-  ${top_mem name 3} ${top_mem pid 3} ${top_mem mem 3}
-  ${top_mem name 4} ${top_mem pid 4} ${top_mem mem 4}
+  ${top_mem name 1} ${top_mem pid 1}   ${top_mem mem_vsize 1}
+  ${top_mem name 2} ${top_mem pid 2}   ${top_mem mem_vsize 2}
+  ${top_mem name 3} ${top_mem pid 3}   ${top_mem mem_vsize 3}
+  ${top_mem name 4} ${top_mem pid 4}   ${top_mem mem_vsize 4}
 
 ${color lightgoldenrod}Processes (IO) ${color}
   ${top_io name 1} ${top_io pid 1} ${top_io io_perc 1}
@@ -88,4 +88,4 @@ ${tail /var/log/messages 3}
 
 ${color lightgoldenrod}Music${color}
   MPD    ${mpd_bar 7,200}
-         ${mpd_status} ${mpd_track} ${mpd_smart}
+         ${mpd_status} ${mpd_elapsed}/${mpd_length} ${mpd_track} ${mpd_smart}
