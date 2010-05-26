@@ -593,8 +593,11 @@ inoremap <C-z>w <C-o>:w<CR>
 inoremap <C-z>q <C-o>gq}<C-o>k<C-o>$
 
 fun! GetCurrentTest()
-    let l:r = substitute(expand("%:p:t:r"), '\(_TEST\)\?$', "", "")
-    return l:r . "_TEST"
+    let l:r = expand("%:p:t:r")
+    if ! match(l:r, '_TEST')
+        let l:r = l:r + "_TEST"
+    endif
+    return l:r
 endfun
 
 " Commonly used commands
