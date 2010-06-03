@@ -91,15 +91,7 @@ fi
 
 # {{{ X
 if [[ -z "${XSESSION}" ]] ; then
-    case "${HOSTNAME:-$(hostname )}" in
-        snowmobile*)
-            export XSESSION=awesome
-        ;;
-
-        *)
-            export XSESSION=fluxbox
-        ;;
-    esac
+    export XSESSION=awesome
 fi
 # }}}
 

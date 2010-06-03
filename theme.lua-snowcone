@@ -1,0 +1,8 @@
+themefile = assert(loadfile("/usr/share/awesome/themes/sky/theme.lua"))
+theme = themefile()
+theme.font = "sans 10"
+theme.wallpaper_cmd         = { "bash bin/wallpaper.bash" }
+return theme
+
+-- vim: set sw=4 sts=4 et ft=lua : --
+
