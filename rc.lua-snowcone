@@ -61,10 +61,13 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 
 -- {{{ Wibox
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right" })
+mytextclock = awful.widget.textclock({ align = "right" }, " %a %b %d, %H:%M:%S ", 1 )
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
+
+myactivebox = widget({ type = "textbox", align = "right" })
+myactivebox.text = ""
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -130,13 +133,14 @@ for s = 1, screen.count() do
     mywibox[s].widgets = {
         {
             mylauncher,
-            mytaglist[s],
             mypromptbox[s],
+            mytaglist[s],
             layout = awful.widget.layout.horizontal.leftright
         },
         mylayoutbox[s],
-        mytextclock,
         s == 1 and mysystray or nil,
+        myactivebox,
+        mytextclock,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
@@ -347,5 +351,45 @@ end)
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+active_bg="#ffffcc"
+active_text=""
+awful.hooks.timer.register(1, function ()
+    active_text = ""
+    active_bg = "#ffffcc"
+    local m = io.open('/home/users/ciaranm/.config/awesome/active')
+    if m then
+        local ml = m:lines()
+        for line in ml do
+            if line == '' then
+                --
+            else
+                if active_text == '' then
+                    --
+                else
+                    active_text = active_text .. " "
+                end
+                active_text = active_text .. string.gsub(line, "^%d+ ", "")
+
+                active_pid = string.gsub(line, " .*", "")
+                local mm = io.open('/proc/' .. active_pid .. "/status")
+                if mm then
+                    mm:close()
+                else
+                    active_bg = "#cc6666"
+                    active_text = active_text .. "!"
+                end
+            end
+        end
+        m:close()
+    end
+
+    if string.len(active_text) == 0 then
+        myactivebox.text = ""
+    else
+        myactivebox.text = " " .. active_text .. " "
+        myactivebox.bg = active_bg
+    end
+end)
 
 -- vim: set sw=4 sts=4 et ft=lua : --

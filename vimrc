@@ -494,14 +494,12 @@ if has("autocmd") && has("eval")
             autocmd QuickFixCmdPost *
                         \ let &titlestring=g:old_titlestring
 
-            if hostname() == "snowmobile"
-                autocmd QuickFixCmdPre make
-                            \ let g:active_line=getpid() . " vim:" . substitute(getcwd(), "^.*/", "", "") |
-                            \ exec "silent !echo '" . g:active_line . "' >> ~/.config/awesome/active"
+            autocmd QuickFixCmdPre make
+                        \ let g:active_line=getpid() . " vim:" . substitute(getcwd(), "^.*/", "", "") |
+                        \ exec "silent !echo '" . g:active_line . "' >> ~/.config/awesome/active"
 
-                autocmd QuickFixCmdPost make
-                            \ exec "silent !sed -i -e '/^" . getpid() . " /d' ~/.config/awesome/active"
-            endif
+            autocmd QuickFixCmdPost make
+                        \ exec "silent !sed -i -e '/^" . getpid() . " /d' ~/.config/awesome/active"
 
         catch
         endtry
