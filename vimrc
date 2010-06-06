@@ -592,8 +592,8 @@ inoremap <C-z>q <C-o>gq}<C-o>k<C-o>$
 
 fun! GetCurrentTest()
     let l:r = expand("%:p:t:r")
-    if ! match(l:r, '_TEST')
-        let l:r = l:r + "_TEST"
+    if match(l:r, '_TEST') == -1
+        let l:r = l:r . "_TEST"
     endif
     return l:r
 endfun
