@@ -247,8 +247,18 @@ xt() {
 }
 
 xa() {
-    local retcode
-    echo $$ $1 $2 >> ~/.config/awesome/active
+    local retcode cmd="" c
+    for c in "$@" ; do
+        [[ ${c} == "nice" ]] || [[ ${c} == "ionice" ]] || \
+            [[ ${c} == "sudo" ]] || [[ ${c#-} != ${c} ]] && continue
+        if [[ -z ${cmd} ]] ; then
+            cmd=${c}
+        else
+            cmd="${cmd} ${c}"
+            break
+        fi
+    done
+    echo $$ $cmd >> ~/.config/awesome/active
     "$@"
     retcode=$?
     sed -e "/^$$ /d" -i ~/.config/awesome/active
