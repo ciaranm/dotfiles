@@ -27,8 +27,9 @@ modkey = "Mod4"
 layouts =
 {
     awful.layout.suit.magnifier,
-    awful.layout.suit.max,
-    awful.layout.suit.floating
+    awful.layout.suit.floating,
+    awful.layout.suit.tile,
+    awful.layout.suit.max
 }
 -- }}}
 
@@ -139,8 +140,8 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         s == 1 and mysystray or nil,
-        myactivebox,
         mytextclock,
+        myactivebox,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
