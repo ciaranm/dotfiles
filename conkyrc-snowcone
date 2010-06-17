@@ -60,7 +60,6 @@ ${color lightgoldenrod}Filesystems${color}
 
 ${color lightgoldenrod}Disks${color}
   sda    ${diskiograph_read /dev/sda 20,97} ${diskiograph_write /dev/sda 20,97}
-         ${hddtemp sda}
 
 ${color lightgoldenrod}Network${color}
   eth1   ${downspeedgraph eth1 20,97} ${upspeedgraph eth1 20,97}
@@ -85,7 +84,7 @@ ${color lightgoldenrod}Apps ${color}
 
 ${color lightgoldenrod}System log${color}
 ${tail /var/log/messages 3}
-
+${if_mpd_playing}
 ${color lightgoldenrod}Music${color}
   MPD    ${mpd_bar 7,200}
-         ${mpd_status} ${mpd_elapsed}/${mpd_length} ${mpd_track} ${mpd_smart}
+         ${mpd_status} ${mpd_track} ${mpd_elapsed}/${mpd_length} ${mpd_track} ${mpd_smart}${endif}
