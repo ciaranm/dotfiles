@@ -325,8 +325,10 @@ awful.rules.rules = {
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.add_signal("manage", function (c, startup)
-    -- Add a titlebar
-    -- awful.titlebar.add(c, { modkey = modkey })
+    -- Add a titlebar, but only to floating things
+    if awful.client.floating.get(c) then
+        awful.titlebar.add(c, { modkey = modkey })
+    end
 
     -- Enable sloppy focus
 -- -- --    c:add_signal("mouse::enter", function(c)
