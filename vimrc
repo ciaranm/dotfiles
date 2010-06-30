@@ -660,6 +660,10 @@ endif
 " q: sucks
 nmap q: :q
 
+" * is silly
+noremap * :let @/='\<'.expand('<cword>').'\>'<bar>:set hls<CR>
+noremap g* :let @/=expand('<cword>')<bar>:set hls<CR>
+
 " set up some more useful digraphs
 if has("digraphs")
     digraph ., 8230    " ellipsis (…)
