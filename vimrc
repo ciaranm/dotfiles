@@ -457,7 +457,7 @@ if has("autocmd") && has("eval")
                         \ " --enable-ruby --enable-python --enable-vim --enable-bash-completion" .
                         \ " --enable-zsh-completion --with-repositories=all --with-clients=all --with-environments=all" .
                         \ " --enable-visibility --enable-gnu-ldconfig --enable-htmltidy" .
-                        \ " --enable-ruby-doc --enable-python-doc --enable-xml"
+                        \ " --enable-ruby-doc --enable-python-doc --enable-xml --enable-pbins"
 
             " Similarly, try to automatically run ./configure and / or
             " autogen if necessary.
@@ -568,7 +568,9 @@ nmap <C-w>. :bn<CR>
 nmap <Leader>cwc :cclose<CR>
 nmap <Leader>cwo :botright copen 5<CR><C-w>p
 nmap <Leader>cn  :cnext<CR>
+nmap <Leader>cf  :cnf<CR>
 nmap - :cnext<CR>
+nmap <Leader>- :cnf<CR>
 nmap <Leader>cp  :cprevious<CR>
 nmap <Leader>ce  :clast<CR>
 
@@ -853,13 +855,12 @@ if has("eval") && has("autocmd")
         iabbrev <buffer> jpv private
         iabbrev <buffer> jsl std::list
         iabbrev <buffer> jsm std::map
-        iabbrev <buffer> jsp std::tr1::shared_ptr
+        iabbrev <buffer> jsp std::shared_ptr
         iabbrev <buffer> jss std::string
         iabbrev <buffer> jsv std::vector
         iabbrev <buffer> jty typedef
         iabbrev <buffer> jun using namespace
         iabbrev <buffer> jvi virtual
-        iabbrev <buffer> jt1 std::tr1
     endfun
 
     augroup abbreviations
