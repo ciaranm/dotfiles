@@ -457,7 +457,8 @@ if has("autocmd") && has("eval")
                         \ " --enable-ruby --enable-python --enable-vim --enable-bash-completion" .
                         \ " --enable-zsh-completion --with-repositories=all --with-clients=all --with-environments=all" .
                         \ " --enable-visibility --enable-gnu-ldconfig --enable-htmltidy" .
-                        \ " --enable-ruby-doc --enable-python-doc --enable-xml --enable-pbins"
+                        \ " --enable-ruby-doc --enable-python-doc --enable-xml --enable-pbins" .
+                        \ " --enable-search-index"
 
             " Similarly, try to automatically run ./configure and / or
             " autogen if necessary.

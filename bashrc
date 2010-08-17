@@ -382,10 +382,10 @@ compiler-gcc-4.4() {
 }
 
 compiler-gcc-4.5() {
-    export PATH="/usr/x86_64-pc-linux-gnu/gcc-bin/4.5.0:${PATH}" \
-    GCC_PATH="/usr/x86_64-pc-linux-gnu/gcc-bin/4.5.0" \
-    LDPATH="/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.0:/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.0/32" \
-    LD_LIBRARY_PATH="/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.0:/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.0/32" \
+    export PATH="/usr/x86_64-pc-linux-gnu/gcc-bin/4.5.1:${PATH}" \
+    GCC_PATH="/usr/x86_64-pc-linux-gnu/gcc-bin/4.5.1" \
+    LDPATH="/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.1:/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.1/32" \
+    LD_LIBRARY_PATH="/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.1:/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.1/32" \
     STDCXX_INCDIR="g++-v4" CXXFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 -march=core2" ACTIVE_COMPILER="+4.5"
 }
 
