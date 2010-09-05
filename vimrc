@@ -851,6 +851,7 @@ if has("eval") && has("autocmd")
         iabbrev <buffer> jit iterator
         iabbrev <buffer> jmp std::make_pair
         iabbrev <buffer> jns namespace
+        iabbrev <buffer> jpl std::placeholders
         iabbrev <buffer> jpr protected
         iabbrev <buffer> jpu public
         iabbrev <buffer> jpv private
@@ -861,6 +862,7 @@ if has("eval") && has("autocmd")
         iabbrev <buffer> jsv std::vector
         iabbrev <buffer> jty typedef
         iabbrev <buffer> jun using namespace
+        iabbrev <buffer> jup std::unique_ptr
         iabbrev <buffer> jvi virtual
     endfun
 
