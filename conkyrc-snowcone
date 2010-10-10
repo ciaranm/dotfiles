@@ -3,9 +3,10 @@ alignment bottom_left
 double_buffer yes
 own_window no
 own_window_type desktop
-draw_borders yes
+draw_borders no
 draw_graph_borders yes
 draw_outline no
+draw_shades yes
 update_interval 1
 use_xft 1
 own_window_transparent yes
