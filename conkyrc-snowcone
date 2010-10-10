@@ -5,6 +5,7 @@ own_window no
 own_window_type desktop
 draw_borders yes
 draw_graph_borders yes
+draw_outline no
 update_interval 1
 use_xft 1
 own_window_transparent yes
@@ -63,8 +64,8 @@ ${color lightgoldenrod}Disks${color}
 
 ${color lightgoldenrod}Network${color}
   conn   ${tcp_portmon 1 32767 count} ${tcp_portmon 32768 61000 count}
-  eth1   ${downspeedgraph eth1 20,97} ${upspeedgraph eth1 20,97}
-         ${addrs eth1}
+  eth0   ${downspeedgraph eth0 20,97} ${upspeedgraph eth0 20,97}
+         ${addrs eth0}
   wlan0  ${downspeedgraph wlan0 20,97} ${upspeedgraph wlan0 20,97}
          ${addrs wlan0} ${wireless_essid wlan0} ${wireless_bitrate wlan0} ${wireless_link_qual_perc wlan0}%
 
