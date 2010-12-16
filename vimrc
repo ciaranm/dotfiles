@@ -531,6 +531,10 @@ if has("autocmd")
                     \ 1put ='' | 2put ='' | call setline(3, '#include "' .
                     \ substitute(expand("%:t"), ".cc$", ".hh", "") . '"') |
                     \ set sw=4 sts=4 et tw=80 | norm G
+
+        autocmd BufNewFile *.java 0put ='/* vim: set sw=4 sts=4 et foldmethod=syntax : */' |
+                    \ 1put ='' |
+                    \ set sw=4 sts=4 et tw=80 | norm G
     augroup END
 endif
 
