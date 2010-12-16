@@ -137,19 +137,24 @@ if has("eval")
         endwhile
     endfun
 
+    let s:prefer = "inkpot"
+    if -1 != match(getcwd(), 'paludis-stable$')
+        let s:prefer = "maroloccio"
+    endif
+
     if has('gui')
-        call LoadColourScheme("inkpot:night:rainbow_night:darkblue:elflord")
+        call LoadColourScheme(s:prefer . ":elflord")
     else
         if has("autocmd")
             autocmd VimEnter *
                         \ if &t_Co == 88 || &t_Co == 256 |
-                        \     call LoadColourScheme("inkpot:darkblue:elflord") |
+                        \     call LoadColourScheme(s:prefer . ":darkblue:elflord") |
                         \ else |
                         \     call LoadColourScheme("darkblue:elflord") |
                         \ endif
         else
             if &t_Co == 88 || &t_Co == 256
-                call LoadColourScheme("inkpot:darkblue:elflord")
+                call LoadColourScheme(s:prefer . ":darkblue:elflord")
             else
                 call LoadColourScheme("darkblue:elflord")
             endif
