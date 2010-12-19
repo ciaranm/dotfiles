@@ -137,24 +137,26 @@ if has("eval")
         endwhile
     endfun
 
-    let s:prefer = "inkpot"
+    let s:prefer_scheme = "inkpot"
     if -1 != match(getcwd(), 'paludis-stable$')
-        let s:prefer = "maroloccio"
+        let s:prefer_scheme = "maroloccio"
+    elseif -1 != match(getcwd(), 'paludis-newgcc$')
+        let s:prefer_scheme = "desertEx"
     endif
 
     if has('gui')
-        call LoadColourScheme(s:prefer . ":elflord")
+        call LoadColourScheme(s:prefer_scheme . ":elflord")
     else
         if has("autocmd")
             autocmd VimEnter *
                         \ if &t_Co == 88 || &t_Co == 256 |
-                        \     call LoadColourScheme(s:prefer . ":darkblue:elflord") |
+                        \     call LoadColourScheme(s:prefer_scheme . ":darkblue:elflord") |
                         \ else |
                         \     call LoadColourScheme("darkblue:elflord") |
                         \ endif
         else
             if &t_Co == 88 || &t_Co == 256
-                call LoadColourScheme(s:prefer . ":darkblue:elflord")
+                call LoadColourScheme(s:prefer_scheme . ":darkblue:elflord")
             else
                 call LoadColourScheme("darkblue:elflord")
             endif
@@ -273,8 +275,8 @@ if v:version >= 700
     endtry
 endif
 
-" If possible and in gvim, use cursor row highlighting
-if has("gui_running") && v:version >= 700
+" If possible and in gvim with inkpot, use cursor row highlighting
+if has("gui_running") && v:version >= 700 && s:prefer_scheme == "inkpot"
     set cursorline
 end
 

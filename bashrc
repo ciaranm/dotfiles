@@ -356,73 +356,35 @@ screen() {
 # }}}
 
 # {{{ gcc
-case "${HOSTNAME:-$(hostname )}" in
-    snowcone*)
-        export MACHINE_CFLAGS="-march=core2"
-        export MACHINE_CXXFLAGS="-march=core2"
-        ;;
-
-    snowmelt*)
-        export MACHINE_CFLAGS="-march=k8"
-        export MACHINE_CXXFLAGS="-march=k8"
-        ;;
-
-    snowmobile*)
-        export MACHINE_CFLAGS="-march=pentium-m"
-        export MACHINE_CXXFLAGS="-march=pentium-m"
-        ;;
-esac
-
-compiler-gcc-4.4() {
-    export PATH="/usr/x86_64-pc-linux-gnu/gcc-bin/4.4.3:${PATH}" \
-    GCC_PATH="/usr/x86_64-pc-linux-gnu/gcc-bin/4.4.3" \
-    LDPATH="/usr/lib/gcc/x86_64-pc-linux-gnu/4.4.3:/usr/lib/gcc/x86_64-pc-linux-gnu/4.4.3/32" \
-    LD_LIBRARY_PATH="/usr/lib/gcc/x86_64-pc-linux-gnu/4.4.3:/usr/lib/gcc/x86_64-pc-linux-gnu/4.4.3/32" \
-    STDCXX_INCDIR="g++-v4" CXXFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 -march=core2" ACTIVE_COMPILER="+4.4"
-}
-
-compiler-gcc-4.5() {
-    export PATH="/usr/x86_64-pc-linux-gnu/gcc-bin/4.5.1:${PATH}" \
-    GCC_PATH="/usr/x86_64-pc-linux-gnu/gcc-bin/4.5.1" \
-    LDPATH="/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.1:/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.1/32" \
-    LD_LIBRARY_PATH="/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.1:/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.1/32" \
-    STDCXX_INCDIR="g++-v4" CXXFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 -march=core2" ACTIVE_COMPILER="+4.5"
-}
-
 compiler-gcc() {
-    if [[ ${HOSTNAME} == "snowmobile" ]] ; then
-        export \
-            CFLAGS="-O1 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 ${MACHINE_CFLAGS}" \
-            CXXFLAGS="-O1 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 ${MACHINE_CXXFLAGS}" \
-            LDFLAGS="-Wl,--as-needed" \
-            PATH="/usr/lib/ccache/bin/:/usr/libexec/ccache/:${PATH}" \
-            ACTIVE_COMPILER="+"
-    else
-        export \
-            CFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 ${MACHINE_CFLAGS}" \
-            CXXFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 ${MACHINE_CXXFLAGS}" \
-            LDFLAGS="-Wl,--as-needed" \
-            PATH="/usr/lib/ccache/bin/:/usr/libexec/ccache/:${PATH}" \
-            ACTIVE_COMPILER="+"
-    fi
+    export \
+        CFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 -march=native" \
+        CXXFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 -march=native" \
+        LDFLAGS="-Wl,--as-needed" \
+        PATH="/usr/lib/ccache/bin/:/usr/libexec/ccache/:${PATH}" \
+        ACTIVE_COMPILER="+"
+}
+
+compiler-gcc-4.6() {
+    local s=$(ls /etc/env.d/gcc/x86_64-pc-linux-gnu-4.6.0* | sort | tail -n1 | xargs basename | sed -e 's,.*-,-,')
+    export \
+        CFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 -march=native" \
+        CXXFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 -march=native" \
+        LDFLAGS="-Wl,--as-needed" \
+        PATH="/usr/lib/ccache/bin/:/usr/libexec/ccache/:/usr/x86_64-pc-linux-gnu/gcc-bin/4.6.0${s}:${PATH}" \
+        ACTIVE_COMPILER="+4.6${s}" \
+        ROOTPATH="/usr/x86_64-pc-linux-gnu/gcc-bin/4.6.0${s}" \
+        GCC_PATH="/usr/x86_64-pc-linux-gnu/gcc-bin/4.6.0${s}" \
+        LDPATH="/usr/lib/gcc/x86_64-pc-linux-gnu/4.6.0${s}:/usr/lib/gcc/x86_64-pc-linux-gnu/4.6.0${s}/32" \
+        MANPATH="/usr/share/gcc-data/x86_64-pc-linux-gnu/4.6.0${s}/man" \
+        INFOPATH="/usr/share/gcc-data/x86_64-pc-linux-gnu/4.6.0${s}/info" \
+        STDCXX_INCDIR="g++-v4"
 }
 
 compiler-icc() {
     . /opt/intel/cce/*/bin/iccvars.sh
     export CC=icc CXX=icpc CXXFLAGS="-O1 -D__CIARANM_WAS_HERE__ -g -pipe" \
         ACTIVE_COMPILER="+icc"
-}
-
-compiler-conceptgcc() {
-    export CC=conceptgcc CXX=conceptg++ \
-        CXXFLAGS="-O2 -pipe -D__CIARANM_WAS_HERE__ -march=core2 -mtune=core2" \
-        LDFLAGS="-Wl,--as-needed" \
-        LDPATH=/usr/local/conceptgcc/lib/gcc/x86_64-pc-linux-gnu/4.3.0/:/usr/local/conceptgcc/lib64 \
-        GCC_PATH=/usr/local/conceptgcc/bin/ \
-        LD_LIBRARY_PATH=/usr/local/conceptgcc/lib/gcc/x86_64-pc-linux-gnu/4.3.0/:/usr/local/conceptgcc/lib64 \
-        PATH=/usr/local/conceptgcc/bin/:${PATH} CHOST=x86_64-pc-linux-gnu \
-        CBUILD=x86_64-pc-linux-gnu \
-        ACTIVE_COMPILER="+conceptgcc"
 }
 # }}}
 
@@ -623,4 +585,4 @@ export PS1="${PS1}${ps_mrk}${ps_end}"
 
 true
 
-# vim: set et ts=4 tw=80 :
+# vim: set et ts=4 tw=120 :
