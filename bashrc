@@ -531,7 +531,7 @@ ps_scm_f() {
                 b=$(git symbolic-ref HEAD 2>/dev/null )
             fi
 
-            if git status | grep -q '^# Changed but not updated:' ; then
+            if git status | grep -q '^# Changes not staged' ; then
                 a="${a}*"
             fi
 
