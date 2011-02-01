@@ -438,6 +438,9 @@ cache_colour_scr=${cache_colour_l_blue}
 cache_colour_scm=${cache_colour_m_orng}
 
 case "${HOSTNAME:-$(hostname )}" in
+    snowblower*)
+        cache_colour_hst=${cache_colour_l_whte}
+        ;;
     snowcone*)
         cache_colour_hst=${cache_colour_m_purp}
         ;;
