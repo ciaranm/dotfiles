@@ -318,11 +318,6 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
-
-    { rule = { class = "Firefox" },
-      properties = { tag = tags[2][3] } },
-    { rule = { class = "Claws" },
-      properties = { tag = tags[2][2] } },
 }
 -- }}}
 
