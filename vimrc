@@ -869,6 +869,7 @@ if has("eval") && has("autocmd")
         iabbrev <buffer> jsl std::list
         iabbrev <buffer> jsm std::map
         iabbrev <buffer> jsp std::shared_ptr
+        iabbrev <buffer> jms std::make_shared
         iabbrev <buffer> jss std::string
         iabbrev <buffer> jsv std::vector
         iabbrev <buffer> jty typedef
