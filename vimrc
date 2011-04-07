@@ -372,32 +372,6 @@ if has("eval")
     endfun
 
     if v:version >= 700
-        " Load gcov marks
-        hi UncoveredSign guibg=#2e2e2e guifg=#e07070
-        hi CoveredSign guibg=#2e2e2e guifg=#70e070
-        sign define uncovered text=## texthl=UncoveredSign
-        sign define covered text=## texthl=CoveredSign
-        fun! <SID>LoadGcovMarks()
-            if ! filereadable(expand("%").".gcov")
-                return
-            endif
-            sign unplace *
-            for l:x in map(map(filter(readfile(expand("%").".gcov"),
-                        \ '! match(v:val, "^\\s*#\\+:")'),
-                        \ 'substitute(v:val,"^[^:]\\+:\\s*\\(\\d\\+\\):.*","\\1","")'),
-                        \ '":sign place " . v:val . " line=" . v:val . " name=uncovered " .
-                        \ "file=" . expand("%")')
-                exec l:x
-            endfor
-            for l:x in map(map(filter(readfile(expand("%").".gcov"),
-                        \ '! match(v:val, "^\\s*\\d\\+:")'),
-                        \ 'substitute(v:val,"^[^:]\\+:\\s*\\(\\d\\+\\):.*","\\1","")'),
-                        \ '":sign place " . v:val . " line=" . v:val . " name=covered " .
-                        \ "file=" . expand("%")')
-                exec l:x
-            endfor
-        endfun
-
         fun! <SID>UpdateCopyrightHeaders()
             let l:a = 0
             for l:x in getline(1, 10)
@@ -435,17 +409,11 @@ if has("autocmd") && has("eval")
         " m4 matchit support
         autocmd FileType m4 :let b:match_words="(:),`:',[:],{:}"
 
-        " Detect procmailrc
-        autocmd BufRead procmailrc :setfiletype procmail
-
         " bash-completion ftdetects
         autocmd BufNewFile,BufRead /*/*bash*completion*/*
                     \ if expand("<amatch>") !~# "ChangeLog" |
                     \     let b:is_bash = 1 | set filetype=sh |
                     \ endif
-
-        " load gcov for c++ files
-        autocmd FileType cpp call <SID>LoadGcovMarks()
 
         " update copyright headers
         autocmd BufWritePre * call <SID>UpdateCopyrightHeaders()
@@ -641,25 +609,6 @@ inoremap jj <Esc>
 " Kill line
 noremap <C-k> "_dd
 
-" Select everything
-noremap <Leader>gg ggVG
-
-" Reformat everything
-noremap <Leader>gq gggqG
-
-" Reformat paragraph
-noremap <Leader>gp gqap
-
-" Clear lines
-noremap <Leader>clr :s/^.*$//<CR>:nohls<CR>
-
-" Delete blank lines
-noremap <Leader>dbl :g/^$/d<CR>:nohls<CR>
-
-" Enclose each selected line with markers
-noremap <Leader>enc :<C-w>execute
-            \ substitute(":'<,'>s/^.*/#&#/ \| :nohls", "#", input(">"), "g")<CR>
-
 " Edit something in the current directory
 noremap <Leader>ed :e <C-r>=expand("%:p:h")<CR>/<C-d>
 
@@ -769,13 +718,6 @@ if v:version >= 700 && has("eval")
             call SwitchTo(dirname . "/Makefile", a:split)
         endif
     endfun
-
-    noremap <Leader>sh :call SwitchHeader(0)<CR>
-    noremap <Leader>st :call SwitchTest(0)<CR>
-    noremap <Leader>sk :call SwitchMakefile(0)<CR>
-    noremap <Leader>ssh :call SwitchHeader(1)<CR>
-    noremap <Leader>sst :call SwitchTest(1)<CR>
-    noremap <Leader>ssk :call SwitchMakefile(1)<CR>
 endif
 
 " super i_c-y / i_c-e
