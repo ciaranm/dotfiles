@@ -21,24 +21,6 @@ if [[ -z "${TZ}" ]] ; then
 fi
 # }}}
 
-# {{{ System info
-if [[ -z "${!cache_uname_*}" ]] ; then
-    cache_uname_s=$(uname -s 2>&1 || echo "Linux" )
-    cache_uname_m=$(uname -m 2>&1 || echo "i686" )
-    case "${cache_uname_m}" in
-        i?86)
-            cache_gentoo_arch=x86
-            ;;
-        sparc*)
-            cache_gentoo_arch=sparc
-            ;;
-        *)
-            cache_gentoo_arch=${cache_uname_m}
-            ;;
-    esac
-fi
-# }}}
-
 # {{{ Core
 ulimit -c0
 # }}}
@@ -260,79 +242,6 @@ xa() {
 
 # {{{ Paludis
 export PALUDIS_OPTIONS="--resume-command-template ${HOME}/.paludis-resume/XXXXXX"
-# }}}
-
-# {{{ Gentoo things
-if [[ -f /etc/gentoo-release ]] ; then
-    export ECHANGELOG_USER="Ciaran McCreesh <ciaran.mccreesh@blueyonder.co.uk>"
-
-    alias accept="ACCEPT_KEYWORDS='~${cache_gentoo_arch}'"
-    alias acceptp="accept emerge -pv"
-    alias accepte="accept sudo emerge"
-
-    esync() {
-        sudo emerge --sync
-    }
-
-    alias eupdp="emerge -uDpv world"
-    alias eupd="sudo emerge -uD world"
-    alias eetc="sudo /usr/sbin/etc-update"
-
-    alias reps="repoman scan"
-    alias repc="repoman commit"
-    alias ech="echangelog"
-    alias echvb="echangelog 'Version bump'"
-    alias fixh='sed -i -e "1s,-200.,-`date +%Y`,"'
-    alias remrw="sudo mount -oremount -orw"
-
-    svcs () {
-        sudo /etc/init.d/$1 start
-    }
-
-    svce () {
-        sudo /etc/init.d/$1 stop
-    }
-
-    svcr () {
-        sudo /etc/init.d/$1 restart
-    }
-
-    svcz () {
-        sudo /etc/init.d/$1 zap
-    }
-
-    rca () {
-        sudo /sbin/rc-update add $1 default
-    }
-
-    rcd () {
-        sudo /sbin/rc-update del $1 default
-    }
-
-    uploadtogentoomirrors() {
-        scp $1 dev.gentoo.org:/space/distfiles*local/ && \
-            ssh dev.gentoo.org chmod g+rw /space/distfiles*local/$1
-    }
-
-    uploadconfigfile() {
-        scp $1 dev.gentoo.org:public_html/configs/${1#.}
-    }
-
-    explainuseflag() {
-        sed -ne "s,^\([^ ]*:\)\?$1 - ,,p" \
-            /usr/portage/profiles/use.desc \
-            /usr/portage/profiles/use.local.desc
-    }
-
-    edesc() {
-        cat *.ebuild | sed -ne 's-^DESCRIPTION="\(.*\)".*-\1-1p' | sort -u
-    }
-
-    ewww() {
-        cat *.ebuild | sed -ne 's-^HOMEPAGE="\(.*\)".*-\1-1p' | sort -u
-    }
-
-fi
 # }}}
 
 # {{{ minicom
