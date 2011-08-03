@@ -98,14 +98,14 @@ export MOZILLA_NEWTYPE=tab
 # }}}
 
 # {{{ ls, pushd etc
-if [[ -f /etc/DIR_COLORS ]] ; then
-    if [[ ${cache_term_colours} -ge 8  ]] ; then
-        eval $(dircolors -b /etc/DIR_COLORS )
-        alias ls="ls --color=if-tty"
-        alias ll="ls --color=if-tty -l -h"
-    else
-        alias ll="ls -l -h"
-    fi
+if [[ -f /etc/DIR_COLORS ]] && [[ ${cache_term_colours} -ge 8  ]] ; then
+    eval $(dircolors -b /etc/DIR_COLORS )
+    alias ls="ls --color=if-tty"
+    alias ll="ls --color=if-tty -l -h"
+elif type dircolors &>/dev/null && [[ ${cache_term_colours} -ge 8  ]] ; then
+    eval $(dircolors )
+    alias ls="ls --color=if-tty"
+    alias ll="ls --color=if-tty -l -h"
 elif [[ "${cache_uname_s}" == "FreeBSD" ]] ; then
     export CLICOLOR="yes"
     export LSCOLORS=Gxfxcxdxbxegedabagacad
@@ -119,12 +119,6 @@ alias pp="popd"
 # }}}
 
 # {{{ Completion, history
-for a in /etc/profile.d/bash-completion{,.sh} ; do
-    if [[ -f "${a}" ]] ; then
-        source "${a}"
-        break
-    fi
-done
 export COMP_WORDBREAKS=${COMP_WORDBREAKS/:/}
 
 export FIGNORE='~'
@@ -133,37 +127,6 @@ export HISTCONTROL=ignorespace:ignoredups
 export HISTFILESIZE=50000
 export HISTSIZE=50000
 # }}}
-
-# {{{ CVS
-alias cu="cvs upd"
-# }}}
-
-# {{{ SVN
-[[ -d ${HOME}/svn ]] && svn_repo_dir=${HOME}/svn
-alias svu="svn update"
-alias svs="svn status"
-alias svc="svn commit"
-alias sva="svn add"
-alias svar="svn status | grep '^\?' | cut -d\  -f2- | xargs svn add"
-svnew() {
-    [[ -z "$1" ]] && ( echo "need a parameter" ; return 1 )
-    svnadmin create ${HOME}/svn/$1 && \
-        svn checkout file://${HOME}/svn/$1
-}
-# }}}
-
-# {{{ git
-alias gis="git status | grep --color=never '^[^a-z]\+\(new file:\|modified:\)' |
-cut -d'#' -f2-"
-# }}}
-
-# {{{ RSYNC
-alias ssync="rsync --rsh=ssh"
-alias ssyncr="rsync --rsh=ssh --recursive --verbose --progress"
-# }}}
-
-# {{{ Random aliases
-alias lib="telnet eleanor.lib.gla.ac.uk"
 
 grab() {
     sudo chown -R ${USER} ${1:-.}
@@ -181,8 +144,6 @@ fcd() {
     qcd ~/$1 || qcd ~/work/$1 || qcd ~/cvs/$1 || ecd $1
 }
 
-alias hmake="hilite make"
-alias hmakej="hilite make -j"
 alias clean="rm *~"
 
 vgm() {
@@ -190,10 +151,6 @@ vgm() {
         $([[ -f misc/valgrind-suppress ]] && \
             echo --suppressions=misc/valgrind-suppress ) \
         "$@"
-}
-
-mktar() {
-    tar jcvf "${1%%/}.tar.bz2" "${1%%/}/"
 }
 
 makepasswords() {
@@ -207,14 +164,6 @@ makepasswords() {
         }
 EOPERL
 }
-
-echo1() {
-    echo "$1"
-}
-
-if ! type tac &>/dev/null ; then
-    alias tac="sed -n -e '1!G;\$p;h'"
-fi
 
 xt() {
     echo -n -e "\033]0;$*\007"
@@ -238,14 +187,6 @@ xa() {
     sed -e "/^$$ /d" -i ~/.config/awesome/active
     return $retcode
 }
-# }}}
-
-# {{{ Paludis
-export PALUDIS_OPTIONS="--resume-command-template ${HOME}/.paludis-resume/XXXXXX"
-# }}}
-
-# {{{ minicom
-alias minic='echo -ne "\033]0;minicom\007" ; minicom -c on'
 # }}}
 
 # {{{ screen
