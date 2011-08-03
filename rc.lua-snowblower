@@ -41,7 +41,7 @@ for s = 1, screen.count() do
     if s == 2 then
         tags[s] = awful.tag({ "1=temp", "2=mail", "3=web", 4, "5=work", 6, 7, 8, 9 }, s, layouts[1])
     else
-        tags[s] = awful.tag({ 1, 2, 3, "4=irc", 5, 6, 7, 8, "9=rt" }, s, layouts[4])
+        tags[s] = awful.tag({ 1, 2, 3, "4=irc", 5, 6, 7, 8, "9=rt" }, s, layouts[1])
     end
 end
 -- }}}
@@ -224,11 +224,13 @@ globalkeys = awful.util.table.join(
         nil,
         awful.util.getdir("cache") .. "/history_rename")
     end),
-    awful.key({ modkey },            "F12",   function () awful.util.spawn("alock -auth pam -bg blank:color=goldenrod") end),
-    awful.key({ }, "XF86AudioPlay",           function () awful.util.spawn("mpc toggle") end),
-    awful.key({ }, "XF86AudioLowerVolume",    function () awful.util.spawn("amixer set PCM 2-") end),
-    awful.key({ }, "XF86AudioRaiseVolume",    function () awful.util.spawn("amixer set PCM 2+") end),
-    awful.key({ }, "XF86AudioMute",           function () awful.util.spawn("amixer set Master toggle") end),
+    awful.key({ modkey }, "F12",                  function () awful.util.spawn("alock -auth pam -bg blank:color=goldenrod") end),
+    awful.key({ }, "XF86AudioPlay",               function () awful.util.spawn("mpc toggle") end),
+    awful.key({ }, "XF86AudioLowerVolume",        function () awful.util.spawn("amixer set PCM 2-") end),
+    awful.key({ }, "XF86AudioRaiseVolume",        function () awful.util.spawn("amixer set PCM 2+") end),
+    awful.key({ }, "XF86AudioMute",               function () awful.util.spawn("amixer set Master toggle") end),
+    awful.key({ modkey }, "XF86AudioLowerVolume", function () awful.util.spawn("bash -c 'echo Master 80% PCM 80% Front 80% | xargs -n2 amixer -q set '") end),
+    awful.key({ modkey }, "XF86AudioRaiseVolume", function () awful.util.spawn("bash -c 'echo Master 100% PCM 100% Front 100% | xargs -n2 amixer -q set '") end),
 
     awful.key({ modkey }, "x",
               function ()

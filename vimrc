@@ -496,6 +496,10 @@ if has("autocmd")
     augroup content
         autocmd!
 
+        autocmd BufNewFile *.hs 0put ='-- vim: set sw=4 sts=4 et tw=80 :' |
+                    \ set sw=4 sts=4 et tw=80 |
+                    \ norm G
+
         autocmd BufNewFile *.rb 0put ='# vim: set sw=4 sts=4 et tw=80 :' |
                     \ 0put ='#!/usr/bin/ruby' | set sw=4 sts=4 et tw=80 |
                     \ norm G
