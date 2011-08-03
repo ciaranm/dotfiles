@@ -2,6 +2,8 @@ CONFIGS = \
 	Makefile \
 	Xdefaults \
 	bashrc \
+	gitignore \
+	gitconfig \
 	screenrc \
 	toprc \
 	vimrc \

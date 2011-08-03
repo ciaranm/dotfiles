@@ -1,0 +1,29 @@
+[user]
+	name = Ciaran McCreesh
+	email = ciaran.mccreesh@googlemail.com
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+	ui = auto
+[core]
+	excludesfile = ~/.gitignore
+	pager = 
+[diff]
+	renames = copy
+[push]
+	default = tracking
+[alias]
+	ll = log --decorate --graph
+	sb = status -sb
+	dw = diff --word-diff
+	br = branch --v
+	cp = cherry-pick
+	cv = cherry -v
+[sendemail]
+	confirm = auto
+	smtpencryption = tls
+	smtpserver = smtp.gmail.com
+	smtpuser = ciaran.mccreesh@googlemail.com
+	smtpserverport = 587
+
