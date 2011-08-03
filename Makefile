@@ -1,6 +1,7 @@
 CONFIGS = \
 	Makefile \
 	Xdefaults \
+	Xresources-snowbell \
 	bashrc \
 	gitignore \
 	gitconfig \
@@ -57,6 +58,12 @@ install-file-rc.lua-snowcone : rc.lua-snowcone
 
 install-file-theme.lua-snowcone : theme.lua-snowcone
 	test `hostname` != 'snowcone' || install $< $(HOME)/.config/awesome/theme.lua
+
+install-file-Xdefaults : Xdefaults
+	test `hostname` = 'snowbell' || install $< $(HOME)/.Xdefaults
+
+install-file-Xresources-snowbell : Xresources-snowbell
+	test `hostname` != 'snowbell' || install $< $(HOME)/.Xresources
 
 install: $(foreach f, $(CONFIGS), install-file-$(f) )
 

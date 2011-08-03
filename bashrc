@@ -105,16 +105,8 @@ fi
 if [[ -f /usr/bin/less ]] ; then
     export PAGER=less
     export LESS="--ignore-case --long-prompt"
-fi
-if [[ -f /usr/bin/vimpager ]] ; then
-    export PAGER=vimpager
-    export MANPAGER=vimmanpager
-elif [[ -f /usr/share/vim/vim63/macros/less.sh ]] ; then
-    export PAGER="/usr/share/vim/vim63/macros/less.sh"
-elif [[ -f /usr/share/vim/vim70aa/macros/less.sh ]] ; then
-    export PAGER="/usr/share/vim/vim70aa/macros/less.sh"
 else
-    export MANPAGER="LANG=C less -r"
+    export MANPAGER="env LANG=C less -r"
 fi
 alias page=$PAGER
 # }}}
