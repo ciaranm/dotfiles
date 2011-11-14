@@ -292,6 +292,9 @@ case "${HOSTNAME:-$(hostname )}" in
     snowmelt*)
         cache_colour_hst=${cache_colour_l_whte}
         ;;
+    snowbell*)
+        cache_colour_hst=${cache_colour_l_blue}
+        ;;
     *)
         cache_colour_hst=${cache_colour_m_gren}
         ;;
