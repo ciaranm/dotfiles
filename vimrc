@@ -96,7 +96,7 @@ set whichwrap+=<,>,[,]
 
 " Use the cool tab complete menu
 set wildmenu
-set wildignore+=*.o,*~,.lo
+set wildignore+=*.o,*~,.lo,*.hi
 set suffixes+=.in,.a,.1
 
 " Allow edit buffers to be hidden
