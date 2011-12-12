@@ -70,14 +70,11 @@ ${color lightgoldenrod}Disks${color}
 
 ${color lightgoldenrod}Network${color}
   conn   ${tcp_portmon 1 32767 count} ${tcp_portmon 32768 61000 count}
-  eth0   ${downspeedgraph eth0 20,97} ${upspeedgraph eth0 20,97}
+${if_up eth0}  eth0   ${downspeedgraph eth0 20,97} ${upspeedgraph eth0 20,97}
          ${addrs eth0}
-  wlan0  ${downspeedgraph wlan0 20,97} ${upspeedgraph wlan0 20,97}
+${endif}${if_up wlan0}  wlan0  ${downspeedgraph wlan0 20,97} ${upspeedgraph wlan0 20,97}
          ${addrs wlan0} ${wireless_essid wlan0} ${wireless_bitrate wlan0} ${wireless_link_qual_perc wlan0}%
-
-${color lightgoldenrod}Apps ${color}
-  ccache ${execi 15 ccache -s | sed -n '2,3s/[^0-9]\+\([0-9]\+\)$/\1/p' | xargs echo}
-
+${endif}
 ${color lightgoldenrod}System log${color}
 ${tail /var/log/messages 3}
 ${if_mpd_playing}
