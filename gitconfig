@@ -20,6 +20,7 @@
 	br = branch --v
 	cp = cherry-pick
 	cv = cherry -v
+	up = !sh -c 'git pull --rebase && git ll HEAD@{1}..'
 [sendemail]
 	confirm = auto
 	smtpencryption = tls
