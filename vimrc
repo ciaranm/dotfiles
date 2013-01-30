@@ -63,7 +63,7 @@ set incsearch
 " Selective case insensitivity
 if has("autocmd")
     autocmd BufEnter *
-                \ if &filetype == "cpp" || &filetype == "c" || &filetype == "java" || &filetype == "haskell" |
+                \ if &filetype == "cpp" || &filetype == "c" || &filetype == "java" || &filetype == "haskell" || &filetype == "promela" |
                 \     set noignorecase noinfercase |
                 \ else |
                 \     set ignorecase infercase |

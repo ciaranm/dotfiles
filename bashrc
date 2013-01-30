@@ -119,6 +119,10 @@ alias pp="popd"
 # }}}
 
 # {{{ Completion, history
+if [[ -f /usr/share/bash-completion/bash_completion ]] ; then
+    . /usr/share/bash-completion/bash_completion
+fi
+
 export COMP_WORDBREAKS=${COMP_WORDBREAKS/:/}
 
 export FIGNORE='~'
