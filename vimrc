@@ -514,6 +514,9 @@ if has("autocmd")
                     \ substitute(expand("%:t"), ".cc$", ".hh", "") . '"') |
                     \ set sw=4 sts=4 et tw=80 | norm G
 
+        autocmd BufNewFile *.pml 0put ='/* vim: set sw=4 sts=4 et foldmethod=syntax : */' |
+                    \ set sw=4 sts=4 et tw=80 | norm G
+
         autocmd BufNewFile *.java 0put ='/* vim: set sw=4 sts=4 et foldmethod=syntax : */' |
                     \ 1put ='' |
                     \ set sw=4 sts=4 et tw=80 | norm G

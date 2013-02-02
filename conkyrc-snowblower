@@ -29,14 +29,6 @@ TEXT
 
 
 
-
-
-
-
-
-
-
-
 ${color lightgoldenrod}System${color}
   host   ${nodename} - ${machine}
   up     ${uptime}
@@ -44,12 +36,16 @@ ${color lightgoldenrod}System${color}
 
 ${color lightgoldenrod}Core Resources${color}
   CPU1   ${cpugraph cpu1 20,200}
+         ${cpugraph cpu5 20,200}
          ${freq 0}MHz ${platform coretemp.0 temp 2}C ${cpu cpu1}%
   CPU2   ${cpugraph cpu2 20,200}
+         ${cpugraph cpu6 20,200}
          ${freq 1}MHz ${platform coretemp.0 temp 3}C ${cpu cpu2}%
   CPU3   ${cpugraph cpu3 20,200}
+         ${cpugraph cpu7 20,200}
          ${freq 2}MHz ${platform coretemp.0 temp 4}C ${cpu cpu3}%
   CPU4   ${cpugraph cpu4 20,200}
+         ${cpugraph cpu8 20,200}
          ${freq 3}MHz ${platform coretemp.0 temp 5}C ${cpu cpu4}%
 
   RAM    ${membar 7,200}
