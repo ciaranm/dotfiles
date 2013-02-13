@@ -862,6 +862,8 @@ if has("eval")
     let perl_fold=1
     let perl_fold_blocks=1
 
+    let g:tex_flavor = "latex"
+
     " Vim specific options
     let g:vimsyntax_noerror=1
     let g:vimembedscript=0

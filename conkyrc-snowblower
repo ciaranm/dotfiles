@@ -10,7 +10,7 @@ draw_shades yes
 update_interval 1
 use_xft 1
 own_window_transparent yes
-xftfont Terminus:size=7
+xftfont Terminus:size=8
 default_color grey90
 border_width 0
 gap_x 10
