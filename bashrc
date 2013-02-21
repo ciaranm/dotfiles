@@ -245,11 +245,11 @@ case "${HOSTNAME:-$(hostname )}" in
     snowcone*)
         bashrc_colour_hst=${bashrc_colour_m_purp}
         ;;
-    snowmobile*)
-        bashrc_colour_hst=${bashrc_colour_m_orng}
+    snowbell*)
+        bashrc_colour_hst=${bashrc_colour_l_blue}
         ;;
     sibu*)
-        bashrc_colour_hst=${bashrc_colour_l_blue}
+        bashrc_colour_hst=${bashrc_colour_m_orng}
         ;;
     savage|cyprus|karkar*)
         bashrc_colour_hst=${bashrc_colour_l_pink}
