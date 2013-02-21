@@ -29,16 +29,16 @@ ulimit -c0
 case "${TERM}" in
     xterm*)
         export TERM=xterm-256color
-        cache_term_colours=256
+        bashrc_term_colours=256
         ;;
     screen)
-        cache_term_colours=256
+        bashrc_term_colours=256
         ;;
     dumb)
-        cache_term_colours=2
+        bashrc_term_colours=2
         ;;
     *)
-        cache_term_colours=16
+        bashrc_term_colours=16
         ;;
 esac
 
@@ -67,6 +67,10 @@ fi
 
 if [[ -n "${PATH/\/usr\/sbin:*/}" ]] ; then
     export PATH="$PATH:/usr/sbin"
+fi
+
+if [[ -n "${PATH/\/texlive:*/}" ]] && [[ -d /usr/local/texlive/2012/bin/x86_64-linux/ ]] ; then
+    export PATH="/usr/local/texlive/2012/bin/x86_64-linux/:$PATH"
 fi
 
 # }}}
@@ -98,15 +102,15 @@ export MOZILLA_NEWTYPE=tab
 # }}}
 
 # {{{ ls, pushd etc
-if [[ -f /etc/DIR_COLORS ]] && [[ ${cache_term_colours} -ge 8  ]] ; then
+if [[ -f /etc/DIR_COLORS ]] && [[ ${bashrc_term_colours} -ge 8  ]] ; then
     eval $(dircolors -b /etc/DIR_COLORS )
     alias ls="ls --color=if-tty"
     alias ll="ls --color=if-tty -l -h"
-elif type dircolors &>/dev/null && [[ ${cache_term_colours} -ge 8  ]] ; then
+elif type dircolors &>/dev/null && [[ ${bashrc_term_colours} -ge 8  ]] ; then
     eval $(dircolors )
     alias ls="ls --color=if-tty"
     alias ll="ls --color=if-tty -l -h"
-elif [[ "${cache_uname_s}" == "FreeBSD" ]] ; then
+elif [[ "${bashrc_uname_s}" == "FreeBSD" ]] ; then
     export CLICOLOR="yes"
     export LSCOLORS=Gxfxcxdxbxegedabagacad
     alias ll="ls -l -h"
@@ -140,34 +144,7 @@ mkcd() {
     mkdir $1 && cd $1
 }
 
-qcd() {
-    cd $1 2>/dev/null
-}
-
-fcd() {
-    qcd ~/$1 || qcd ~/work/$1 || qcd ~/cvs/$1 || ecd $1
-}
-
 alias clean="rm *~"
-
-vgm() {
-    valgrind -q --tool=memcheck --leak-check=yes \
-        $([[ -f misc/valgrind-suppress ]] && \
-            echo --suppressions=misc/valgrind-suppress ) \
-        "$@"
-}
-
-makepasswords() {
-    # suggest a bunch of possible passwords. not suitable for really early perl
-    # versions that don't do auto srand() things.
-    perl <<EOPERL
-        my @a = ("a".."z","A".."Z","0".."9",(split //, q{#@,.<>$%&()*^}));
-        for (1..10) {
-            print join "", map { \$a[rand @a] } (1..rand(3)+7);
-            print qq{\n}
-        }
-EOPERL
-}
 
 xt() {
     echo -n -e "\033]0;$*\007"
@@ -210,97 +187,75 @@ compiler-gcc() {
         PATH="/usr/lib/ccache/bin/:/usr/libexec/ccache/:${PATH}" \
         ACTIVE_COMPILER="+"
 }
-
-compiler-gcc-4.6() {
-    local s=$(ls /etc/env.d/gcc/x86_64-pc-linux-gnu-4.6.0* | sort | tail -n1 | xargs basename | sed -e 's,.*-,-,')
-    export \
-        CFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 -march=native" \
-        CXXFLAGS="-O2 -D__CIARANM_WAS_HERE -pipe -g -ggdb3 -march=native" \
-        LDFLAGS="-Wl,--as-needed" \
-        PATH="/usr/lib/ccache/bin/:/usr/libexec/ccache/:/usr/x86_64-pc-linux-gnu/gcc-bin/4.6.0${s}:${PATH}" \
-        ACTIVE_COMPILER="+4.6${s}" \
-        ROOTPATH="/usr/x86_64-pc-linux-gnu/gcc-bin/4.6.0${s}" \
-        GCC_PATH="/usr/x86_64-pc-linux-gnu/gcc-bin/4.6.0${s}" \
-        LDPATH="/usr/lib/gcc/x86_64-pc-linux-gnu/4.6.0${s}:/usr/lib/gcc/x86_64-pc-linux-gnu/4.6.0${s}/32" \
-        MANPATH="/usr/share/gcc-data/x86_64-pc-linux-gnu/4.6.0${s}/man" \
-        INFOPATH="/usr/share/gcc-data/x86_64-pc-linux-gnu/4.6.0${s}/info" \
-        STDCXX_INCDIR="g++-v4"
-}
-
-compiler-icc() {
-    . /opt/intel/cce/*/bin/iccvars.sh
-    export CC=icc CXX=icpc CXXFLAGS="-O1 -D__CIARANM_WAS_HERE__ -g -pipe" \
-        ACTIVE_COMPILER="+icc"
-}
 # }}}
 
 # {{{ Colours
-case "${cache_term_colours}" in
+case "${bashrc_term_colours}" in
     256)
-        cache_colour_l_blue='\033[38;5;33m'
-        cache_colour_d_blue='\033[38;5;21m'
-        cache_colour_m_purp='\033[38;5;69m'
-        cache_colour_l_yell='\033[38;5;229m'
-        cache_colour_m_yell='\033[38;5;227m'
-        cache_colour_m_gren='\033[38;5;35m'
-        cache_colour_m_grey='\033[38;5;245m'
-        cache_colour_m_orng='\033[38;5;208m'
-        cache_colour_l_pink='\033[38;5;206m'
-        cache_colour_m_teal='\033[38;5;38m'
-        cache_colour_m_brwn='\033[38;5;130m'
-        cache_colour_l_whte='\033[38;5;230m'
-        cache_colour_end='\033[0;0m'
+        bashrc_colour_l_blue='\033[38;5;33m'
+        bashrc_colour_d_blue='\033[38;5;21m'
+        bashrc_colour_m_purp='\033[38;5;69m'
+        bashrc_colour_l_yell='\033[38;5;229m'
+        bashrc_colour_m_yell='\033[38;5;227m'
+        bashrc_colour_m_gren='\033[38;5;35m'
+        bashrc_colour_m_grey='\033[38;5;245m'
+        bashrc_colour_m_orng='\033[38;5;208m'
+        bashrc_colour_l_pink='\033[38;5;206m'
+        bashrc_colour_m_teal='\033[38;5;38m'
+        bashrc_colour_m_brwn='\033[38;5;130m'
+        bashrc_colour_l_whte='\033[38;5;230m'
+        bashrc_colour_end='\033[0;0m'
         ;;
     16)
-        cache_colour_l_blue='\033[1;34m'
-        cache_colour_d_blue='\033[0;32m'
-        cache_colour_m_purp='\033[0;35m'
-        cache_colour_l_yell='\033[1;33m'
-        cache_colour_m_yell='\033[0;33m'
-        cache_colour_m_gren='\033[0;32m'
-        cache_colour_m_grey='\033[0;37m'
-        cache_colour_m_orng='\033[1;31m'
-        cache_colour_l_pink='\033[1;35m'
-        cache_colour_m_teal='\033[0;36m'
-        cache_colour_m_brwn='\033[0;31m'
-        cache_colour_l_whte='\033[0;37m'
-        cache_colour_end='\033[0;0m'
+        bashrc_colour_l_blue='\033[1;34m'
+        bashrc_colour_d_blue='\033[0;32m'
+        bashrc_colour_m_purp='\033[0;35m'
+        bashrc_colour_l_yell='\033[1;33m'
+        bashrc_colour_m_yell='\033[0;33m'
+        bashrc_colour_m_gren='\033[0;32m'
+        bashrc_colour_m_grey='\033[0;37m'
+        bashrc_colour_m_orng='\033[1;31m'
+        bashrc_colour_l_pink='\033[1;35m'
+        bashrc_colour_m_teal='\033[0;36m'
+        bashrc_colour_m_brwn='\033[0;31m'
+        bashrc_colour_l_whte='\033[0;37m'
+        bashrc_colour_end='\033[0;0m'
         ;;
     *)
-        eval unset ${!cache_colour_*}
+        eval unset ${!bashrc_colour_*}
         ;;
 esac
 
-cache_colour_usr=${cache_colour_l_yell}
-cache_colour_cwd=${cache_colour_m_gren}
-cache_colour_wrk=${cache_colour_m_teal}
-cache_colour_rok=${cache_colour_l_yell}
-cache_colour_rer=${cache_colour_m_orng}
-cache_colour_job=${cache_colour_l_pink}
-cache_colour_dir=${cache_colour_m_brwn}
-cache_colour_mrk=${cache_colour_m_yell}
-cache_colour_lda=${cache_colour_m_yell}
-cache_colour_scr=${cache_colour_l_blue}
-cache_colour_scm=${cache_colour_m_orng}
+bashrc_colour_usr=${bashrc_colour_l_yell}
+bashrc_colour_cwd=${bashrc_colour_m_gren}
+bashrc_colour_wrk=${bashrc_colour_m_teal}
+bashrc_colour_rok=${bashrc_colour_l_yell}
+bashrc_colour_rer=${bashrc_colour_m_orng}
+bashrc_colour_job=${bashrc_colour_l_pink}
+bashrc_colour_dir=${bashrc_colour_m_brwn}
+bashrc_colour_mrk=${bashrc_colour_m_yell}
+bashrc_colour_lda=${bashrc_colour_m_yell}
+bashrc_colour_scr=${bashrc_colour_l_blue}
+bashrc_colour_scm=${bashrc_colour_m_orng}
 
 case "${HOSTNAME:-$(hostname )}" in
     snowblower*)
-        cache_colour_hst=${cache_colour_l_whte}
+        bashrc_colour_hst=${bashrc_colour_l_whte}
         ;;
     snowcone*)
-        cache_colour_hst=${cache_colour_m_purp}
+        bashrc_colour_hst=${bashrc_colour_m_purp}
         ;;
     snowmobile*)
-        cache_colour_hst=${cache_colour_m_orng}
+        bashrc_colour_hst=${bashrc_colour_m_orng}
         ;;
-    snowmelt*)
-        cache_colour_hst=${cache_colour_l_whte}
+    sibu*)
+        bashrc_colour_hst=${bashrc_colour_l_blue}
         ;;
-    snowbell*)
-        cache_colour_hst=${cache_colour_l_blue}
+    savage|cyprus|karkar*)
+        bashrc_colour_hst=${bashrc_colour_l_pink}
         ;;
     *)
-        cache_colour_hst=${cache_colour_m_gren}
+        bashrc_colour_hst=${bashrc_colour_m_gren}
         ;;
 esac
 # }}}
@@ -316,9 +271,9 @@ ps_wrk_f() {
 
 ps_retc_f() {
     if [[ ${1} -eq 0 ]] ; then
-        echo -e "${cache_colour_rok}"
+        echo -e "${bashrc_colour_rok}"
     else
-        echo -e "${cache_colour_rer}"
+        echo -e "${bashrc_colour_rer}"
     fi
     return $1
 }
@@ -420,17 +375,17 @@ ps_scm_f() {
 }
 
 PROMPT_COMMAND="export prompt_exit_status=\$? ; $PROMPT_COMMAND"
-ps_usr="\[${cache_colour_usr}\]\u@"
-ps_hst="\[${cache_colour_hst}\]\h "
-ps_cwd="\[${cache_colour_cwd}\]\W\[${cache_colour_wrk}\]\$(ps_wrk_f) "
-ps_mrk="\[${cache_colour_mrk}\]\$ "
-ps_end="\[${cache_colour_end}\]"
+ps_usr="\[${bashrc_colour_usr}\]\u@"
+ps_hst="\[${bashrc_colour_hst}\]\h "
+ps_cwd="\[${bashrc_colour_cwd}\]\W\[${bashrc_colour_wrk}\]\$(ps_wrk_f) "
+ps_mrk="\[${bashrc_colour_mrk}\]\$ "
+ps_end="\[${bashrc_colour_end}\]"
 ps_ret='\[$(ps_retc_f $prompt_exit_status)\]$prompt_exit_status '
-ps_job="\[${cache_colour_job}\]\$(ps_job_f)"
-ps_lda="\[${cache_colour_lda}\]\$(ps_lda_f)"
-ps_dir="\[${cache_colour_dir}\]\$(ps_dir_f)"
-ps_scr="\[${cache_colour_scr}\]\$(ps_scr_f)"
-ps_scm="\[${cache_colour_scm}\]\$(ps_scm_f)"
+ps_job="\[${bashrc_colour_job}\]\$(ps_job_f)"
+ps_lda="\[${bashrc_colour_lda}\]\$(ps_lda_f)"
+ps_dir="\[${bashrc_colour_dir}\]\$(ps_dir_f)"
+ps_scr="\[${bashrc_colour_scr}\]\$(ps_scr_f)"
+ps_scm="\[${bashrc_colour_scm}\]\$(ps_scm_f)"
 export PS1="${ps_sav}${ps_usr}${ps_hst}${ps_cwd}${ps_ret}${ps_lda}${ps_job}${ps_dir}${ps_scr}${ps_scm}"
 export PS1="${PS1}${ps_mrk}${ps_end}"
 # }}}

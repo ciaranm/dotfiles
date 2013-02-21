@@ -117,7 +117,11 @@ set virtualedit=block,onemore
 if has("gui_kde")
     set guifont=Terminus/12/-1/5/50/0/0/0/0/0
 elseif has("gui_gtk")
-    set guifont=Terminus\ 12
+    if hostname() == "snowblower"
+        set guifont=Terminus\ 16
+    else
+        set guifont=Terminus\ 12
+    endif
 elseif has("gui_running")
     set guifont=-xos4-terminus-medium-r-normal--12-140-72-72-c-80-iso8859-1
 endif
