@@ -240,7 +240,7 @@ bashrc_colour_scm=${bashrc_colour_m_orng}
 
 case "${HOSTNAME:-$(hostname )}" in
     snowblower*)
-        bashrc_colour_hst=${bashrc_colour_l_whte}
+        bashrc_colour_hst=${bashrc_colour_m_grey}
         ;;
     snowcone*)
         bashrc_colour_hst=${bashrc_colour_m_purp}
