@@ -10,10 +10,12 @@ XTerm*.color3: chocolate
 XTerm*.multiScroll: true
 XTerm*.saveLines: 10000
 XTerm*.showBlinkAsBold: true
-XTerm*.utf8: 1
+XTerm*.utf8: always
 XTerm*.visualBell: true
 XTerm*.metaSendsEscape: true
-XTerm*.faceName: Terminus
+XTerm*.renderFont: true
+XTerm*.locale: true
+XTerm*.faceName: Inconsolata
 XTerm*.faceSize: 14
 XTerm*.faceSize1: 8
 XTerm*.faceSize2: 10

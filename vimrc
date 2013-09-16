@@ -114,16 +114,12 @@ endif
 set virtualedit=block,onemore
 
 " Set our fonts
-if has("gui_kde")
-    set guifont=Terminus/12/-1/5/50/0/0/0/0/0
-elseif has("gui_gtk")
+if has("gui_gtk")
     if hostname() == "snowblower"
-        set guifont=Terminus\ 16
+        set guifont=Inconsolata\ 16
     else
-        set guifont=Terminus\ 12
+        set guifont=Inconsolata\ 12
     endif
-elseif has("gui_running")
-    set guifont=-xos4-terminus-medium-r-normal--12-140-72-72-c-80-iso8859-1
 endif
 
 " Try to load a nice colourscheme
