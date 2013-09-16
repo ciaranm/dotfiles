@@ -20,15 +20,6 @@ mpd_host localhost
 TEXT
 
 
-
-
-
-
-
-
-
-
-
 ${color lightgoldenrod}System${color}
   host   ${nodename} - ${machine}
   up     ${uptime}
