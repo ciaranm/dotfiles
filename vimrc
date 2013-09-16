@@ -116,9 +116,9 @@ set virtualedit=block,onemore
 " Set our fonts
 if has("gui_gtk")
     if hostname() == "snowblower"
-        set guifont=Source\ Code\ Pro\ Medium\ 14
+        set guifont=Source\ Code\ Pro\ Light\ 16
     else
-        set guifont=Source\ Code\ Pro\ Medium\ 12
+        set guifont=Source\ Code\ Pro\ Light\ 12
     endif
 endif
 
