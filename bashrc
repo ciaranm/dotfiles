@@ -251,7 +251,10 @@ case "${HOSTNAME:-$(hostname )}" in
     sibu*)
         bashrc_colour_hst=${bashrc_colour_m_orng}
         ;;
-    savage|cyprus|karkar*)
+    padang*)
+        bashrc_colour_hst=${bashrc_colour_m_teal}
+        ;;
+    savage|cyprus|karkar|futuna*)
         bashrc_colour_hst=${bashrc_colour_l_pink}
         ;;
     *)

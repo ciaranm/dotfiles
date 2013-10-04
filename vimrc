@@ -117,6 +117,8 @@ set virtualedit=block,onemore
 if has("gui_gtk")
     if hostname() == "snowblower"
         set guifont=Source\ Code\ Pro\ Light\ 16
+    elseif hostname() == "padang"
+        set guifont=Source\ Code\ Pro\ Medium\ 14
     else
         set guifont=Source\ Code\ Pro\ Light\ 12
     endif
