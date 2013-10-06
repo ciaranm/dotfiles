@@ -254,7 +254,7 @@ case "${HOSTNAME:-$(hostname )}" in
     padang*)
         bashrc_colour_hst=${bashrc_colour_m_teal}
         ;;
-    savage|cyprus|karkar|futuna*)
+    savage|cyprus|karkar|futuna|togian*)
         bashrc_colour_hst=${bashrc_colour_l_pink}
         ;;
     *)
