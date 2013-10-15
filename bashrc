@@ -134,6 +134,8 @@ export FIGNORE='~'
 export HISTCONTROL=ignorespace:ignoredups
 export HISTFILESIZE=50000
 export HISTSIZE=50000
+
+shopt -s histverify
 # }}}
 
 grab() {
