@@ -322,6 +322,8 @@ if has("eval") && v:version >= 700
         let &makeprg="nice -n7 make -j12 2>&1"
     elseif hostname() == "snowmobile"
         let &makeprg="nice -n7 make -j1 2>&1"
+    elseif hostname() == "padang"
+        let &makeprg="nice -n7 make -j8 2>&1"
     else
         let &makeprg="nice -n7 make -j2 2>&1"
     endif

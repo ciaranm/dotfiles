@@ -65,5 +65,8 @@ install-file-Xdefaults : Xdefaults
 install-file-Xresources-snowbell : Xresources-snowbell
 	test `hostname` != 'snowbell' || install $< $(HOME)/.Xresources
 
+install-file-gitconfig : gitconfig
+	test `hostname` = 'padang' || install $< $(HOME)/.gitconfig
+
 install: $(foreach f, $(CONFIGS), install-file-$(f) )
 
