@@ -250,6 +250,9 @@ case "${HOSTNAME:-$(hostname )}" in
     snowbell*)
         bashrc_colour_hst=${bashrc_colour_l_blue}
         ;;
+    snowstorm*)
+        bashrc_colour_hst=${bashrc_colour_d_blue}
+        ;;
     sibu*)
         bashrc_colour_hst=${bashrc_colour_m_orng}
         ;;
@@ -390,7 +393,9 @@ ps_job="\[${bashrc_colour_job}\]\$(ps_job_f)"
 ps_lda="\[${bashrc_colour_lda}\]\$(ps_lda_f)"
 ps_dir="\[${bashrc_colour_dir}\]\$(ps_dir_f)"
 ps_scr="\[${bashrc_colour_scr}\]\$(ps_scr_f)"
-ps_scm="\[${bashrc_colour_scm}\]\$(ps_scm_f)"
+if [[ ${HOSTNAME} != snowstorm ]] ; then
+    ps_scm="\[${bashrc_colour_scm}\]\$(ps_scm_f)"
+fi
 export PS1="${ps_sav}${ps_usr}${ps_hst}${ps_cwd}${ps_ret}${ps_lda}${ps_job}${ps_dir}${ps_scr}${ps_scm}"
 export PS1="${PS1}${ps_mrk}${ps_end}"
 # }}}
