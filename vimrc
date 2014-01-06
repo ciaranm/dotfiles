@@ -861,11 +861,10 @@ endif
 "-----------------------------------------------------------------------
 
 if has("eval")
-    " Perl specific options
-    let perl_include_pod=1
-    let perl_fold=1
-    let perl_fold_blocks=1
+    " pathogen
+    silent! execute pathogen#infect()
 
+    " latex
     let g:tex_flavor = "latex"
 
     " Vim specific options
