@@ -40,6 +40,9 @@ endif
 " Don't be compatible with vi
 set nocompatible
 
+" pathogen
+silent! execute pathogen#infect()
+
 " Enable a nice big viminfo file
 set viminfo='1000,f1,:1000,/1000
 set history=500
@@ -63,7 +66,7 @@ set incsearch
 " Selective case insensitivity
 if has("autocmd")
     autocmd BufEnter *
-                \ if &filetype == "cpp" || &filetype == "c" || &filetype == "java" || &filetype == "haskell" || &filetype == "promela" |
+                \ if &filetype == "cpp" || &filetype == "c" || &filetype == "java" || &filetype == "haskell" |
                 \     set noignorecase noinfercase |
                 \ else |
                 \     set ignorecase infercase |
@@ -139,31 +142,7 @@ if has("eval")
         endwhile
     endfun
 
-    let s:prefer_scheme = "inkpot"
-    if -1 != match(getcwd(), 'paludis-stable$')
-        let s:prefer_scheme = "maroloccio"
-    elseif -1 != match(getcwd(), 'paludis-newgcc$')
-        let s:prefer_scheme = "desertEx"
-    endif
-
-    if has('gui')
-        call LoadColourScheme(s:prefer_scheme . ":elflord")
-    else
-        if has("autocmd")
-            autocmd VimEnter *
-                        \ if &t_Co == 88 || &t_Co == 256 |
-                        \     call LoadColourScheme(s:prefer_scheme . ":darkblue:elflord") |
-                        \ else |
-                        \     call LoadColourScheme("darkblue:elflord") |
-                        \ endif
-        else
-            if &t_Co == 88 || &t_Co == 256
-                call LoadColourScheme(s:prefer_scheme . ":darkblue:elflord")
-            else
-                call LoadColourScheme("darkblue:elflord")
-            endif
-        endif
-    endif
+    call LoadColourScheme("bubblegum:inkpot:elflord")
 endif
 
 " No icky toolbar, menu or scrollbars in the GUI
@@ -178,6 +157,7 @@ end
 
 " By default, go for an indent of 4
 set shiftwidth=4
+set expandtab
 
 " Don't make a # force column zero.
 inoremap # X<BS>#
@@ -206,61 +186,6 @@ let g:secure_modelines_modelines = 15
 au VimEnter * call filter(exists("g:secure_modelines_allowed_items") ? g:secure_modelines_allowed_items : [],
             \ 'v:val != "fdm" && v:val != "foldmethod"')
 
-" Nice statusbar
-set laststatus=2
-set statusline=
-set statusline+=%2*%-3.3n%0*\                " buffer number
-set statusline+=%f\                          " file name
-if has("eval")
-    let g:scm_cache = {}
-    fun! ScmInfo()
-        let l:key = getcwd()
-        if ! has_key(g:scm_cache, l:key)
-            if (isdirectory(getcwd() . "/.git"))
-                let g:scm_cache[l:key] = "[" . substitute(readfile(getcwd() . "/.git/HEAD", "", 1)[0],
-                            \ "^.*/", "", "") . "] "
-            else
-                let g:scm_cache[l:key] = ""
-            endif
-        endif
-        return g:scm_cache[l:key]
-    endfun
-    set statusline+=%{ScmInfo()}             " scm info
-endif
-set statusline+=%h%1*%m%r%w%0*               " flags
-set statusline+=\[%{strlen(&ft)?&ft:'none'}, " filetype
-set statusline+=%{&encoding},                " encoding
-set statusline+=%{&fileformat}]              " file format
-if filereadable(expand("$VIM/vimfiles/plugin/vimbuddy.vim"))
-    set statusline+=\ %{VimBuddy()}          " vim buddy
-endif
-set statusline+=%=                           " right align
-set statusline+=%2*0x%-8B\                   " current char
-set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
-
-" special statusbar for special windows
-if has("autocmd")
-    au FileType qf
-                \ if &buftype == "quickfix" |
-                \     setlocal statusline=%2*%-3.3n%0* |
-                \     setlocal statusline+=\ \[Compiler\ Messages\] |
-                \     setlocal statusline+=%=%2*\ %<%P |
-                \ endif
-
-    fun! <SID>FixMiniBufExplorerTitle()
-        if "-MiniBufExplorer-" == bufname("%")
-            setlocal statusline=%2*%-3.3n%0*
-            setlocal statusline+=\[Buffers\]
-            setlocal statusline+=%=%2*\ %<%P
-        endif
-    endfun
-
-    au BufWinEnter *
-                \ let oldwinnr=winnr() |
-                \ windo call <SID>FixMiniBufExplorerTitle() |
-                \ exec oldwinnr . " wincmd w"
-endif
-
 " Nice window title
 if has('title') && (has('gui_running') || &title)
     set titlestring=
@@ -269,6 +194,9 @@ if has('title') && (has('gui_running') || &title)
     set titlestring+=\ -\ %{v:progname}                               " program name
     set titlestring+=\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}  " working directory
 endif
+
+" Status line
+set laststatus=2
 
 " If possible, try to use a narrow number column.
 if v:version >= 700
@@ -279,7 +207,7 @@ if v:version >= 700
 endif
 
 " If possible and in gvim with inkpot, use cursor row highlighting
-if has("gui_running") && v:version >= 700 && s:prefer_scheme == "inkpot"
+if has("gui_running") && v:version >= 700
     set cursorline
 end
 
@@ -316,17 +244,7 @@ set fillchars=fold:-
 
 " Filter expected errors from make
 if has("eval") && v:version >= 700
-    if hostname() == "snowcone"
-        let &makeprg="nice -n7 make -j4 2>&1"
-    elseif hostname() == "snowblower"
-        let &makeprg="nice -n7 make -j12 2>&1"
-    elseif hostname() == "snowmobile"
-        let &makeprg="nice -n7 make -j1 2>&1"
-    elseif hostname() == "padang"
-        let &makeprg="nice -n7 make -j8 2>&1"
-    else
-        let &makeprg="nice -n7 make -j2 2>&1"
-    endif
+    let &makeprg="nice -n7 make -j`sh -c 'nproc \\|\\| echo 2'` 2>&1"
 
     " ignore libtool links with version-info
     let &errorformat="%-G%.%#libtool%.%#version-info%.%#,".&errorformat
@@ -861,9 +779,6 @@ endif
 "-----------------------------------------------------------------------
 
 if has("eval")
-    " pathogen
-    silent! execute pathogen#infect()
-
     " latex
     let g:tex_flavor = "latex"
 
@@ -879,83 +794,11 @@ if has("eval")
     let g:load_doxygen_syntax=1
     let g:doxygen_end_punctuation='[.?]'
 
-    " eruby options
-    au Syntax * hi link erubyRubyDelim Directory
-
-    " Settings for taglist.vim
-    let Tlist_Use_Right_Window=1
-    let Tlist_Auto_Open=0
-    let Tlist_Enable_Fold_Column=0
-    let Tlist_Compact_Format=1
-    let Tlist_WinWidth=28
-    let Tlist_Exit_OnlyWindow=1
-    let Tlist_File_Fold_Auto_Close = 1
-
-    " Settings minibufexpl.vim
-    let g:miniBufExplModSelTarget = 1
-    let g:miniBufExplWinFixHeight = 1
-    let g:miniBufExplWinMaxSize = 1
-    " let g:miniBufExplForceSyntaxEnable = 1
-
-    " Settings for showmarks.vim
-    if has("gui_running")
-        let g:showmarks_enable=1
-    else
-        let g:showmarks_enable=0
-        let loaded_showmarks=1
-    endif
-
-    let g:showmarks_include="abcdefghijklmnopqrstuvwxyz"
-
-    if has("autocmd")
-        fun! <SID>FixShowmarksColours()
-            if has('gui')
-                hi ShowMarksHLl gui=bold guifg=#a0a0e0 guibg=#2e2e2e 
-                hi ShowMarksHLu gui=none guifg=#a0a0e0 guibg=#2e2e2e 
-                hi ShowMarksHLo gui=none guifg=#a0a0e0 guibg=#2e2e2e 
-                hi ShowMarksHLm gui=none guifg=#a0a0e0 guibg=#2e2e2e 
-                hi SignColumn   gui=none guifg=#f0f0f8 guibg=#2e2e2e 
-            endif
-        endfun
-        if v:version >= 700
-            autocmd VimEnter,Syntax,ColorScheme * call <SID>FixShowmarksColours()
-        else
-            autocmd VimEnter,Syntax * call <SID>FixShowmarksColours()
-        endif
-    endif
-
     " Settings for explorer.vim
     let g:explHideFiles='^\.'
 
     " Settings for netrw
     let g:netrw_list_hide='^\.,\~$'
-
-    " Settings for :TOhtml
-    let html_number_lines=1
-    let html_use_css=1
-    let use_xhtml=1
-
-    " cscope settings
-    if has('cscope') && filereadable("/usr/bin/cscope")
-        set csto=0
-        set cscopetag
-        set nocsverb
-        if filereadable("cscope.out")
-            cs add cscope.out
-        endif
-        set csverb
-
-        let x = "sgctefd"
-        while x != ""
-            let y = strpart(x, 0, 1) | let x = strpart(x, 1)
-            exec "nmap <C-j>" . y . " :cscope find " . y .
-                        \ " <C-R>=expand(\"\<cword\>\")<CR><CR>"
-            exec "nmap <C-j><C-j>" . y . " :scscope find " . y .
-                        \ " <C-R>=expand(\"\<cword\>\")<CR><CR>"
-        endwhile
-        nmap <C-j>i      :cscope find i ^<C-R>=expand("<cword>")<CR><CR>
-        nmap <C-j><C-j>i :scscope find i ^<C-R>=expand("<cword>")<CR><CR>
-    endif
 endif
 
 "-----------------------------------------------------------------------
