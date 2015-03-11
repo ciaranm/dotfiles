@@ -253,6 +253,12 @@ case "${HOSTNAME:-$(hostname )}" in
     snowstorm*)
         bashrc_colour_hst=${bashrc_colour_d_blue}
         ;;
+    snowflex*)
+        bashrc_colour_hst=${bashrc_colour_l_blue}
+        ;;
+    gpgnode-*)
+        bashrc_colour_hst=${bashrc_colour_m_yell}
+        ;;
     sibu*)
         bashrc_colour_hst=${bashrc_colour_m_orng}
         ;;
