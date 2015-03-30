@@ -118,7 +118,7 @@ set virtualedit=block,onemore
 
 " Set our fonts
 if has("gui_gtk")
-    if hostname() == "snowblower"
+    if hostname() == "snowblower" || hostname() == "snowflex"
         set guifont=Source\ Code\ Pro\ Light\ 16
     elseif hostname() == "padang"
         set guifont=Source\ Code\ Pro\ Medium\ 14
@@ -142,6 +142,9 @@ if has("eval")
         endwhile
     endfun
 
+    if hostname() == "snowflex"
+        set background=dark
+    endif
     call LoadColourScheme("bubblegum:inkpot:elflord")
 endif
 
