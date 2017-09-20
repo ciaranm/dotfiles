@@ -228,15 +228,15 @@ case "${bashrc_term_colours}" in
         ;;
 esac
 
-bashrc_colour_usr=${bashrc_colour_l_yell}
+bashrc_colour_usr=${bashrc_colour_m_orng}
 bashrc_colour_cwd=${bashrc_colour_m_gren}
 bashrc_colour_wrk=${bashrc_colour_m_teal}
-bashrc_colour_rok=${bashrc_colour_l_yell}
+bashrc_colour_rok=${bashrc_colour_d_blue}
 bashrc_colour_rer=${bashrc_colour_m_orng}
 bashrc_colour_job=${bashrc_colour_l_pink}
 bashrc_colour_dir=${bashrc_colour_m_brwn}
-bashrc_colour_mrk=${bashrc_colour_m_yell}
-bashrc_colour_lda=${bashrc_colour_m_yell}
+bashrc_colour_mrk=${bashrc_colour_l_pink}
+bashrc_colour_lda=${bashrc_colour_m_gren}
 bashrc_colour_scr=${bashrc_colour_l_blue}
 bashrc_colour_scm=${bashrc_colour_m_orng}
 
@@ -247,7 +247,7 @@ case "${HOSTNAME:-$(hostname )}" in
     snowcone*)
         bashrc_colour_hst=${bashrc_colour_m_purp}
         ;;
-    snowbell*)
+    snowbell*|snowtea*)
         bashrc_colour_hst=${bashrc_colour_l_blue}
         ;;
     snowstorm*)
@@ -318,76 +318,6 @@ ps_scr_f() {
     fi
 }
 
-ps_scm_f() {
-    local s=
-    if [[ -d ".svn" ]] ; then
-        local r=$(svn info | sed -n -e '/^Revision: \([0-9]*\).*$/s//\1/p' )
-        s="(r$r$(svn status | grep -q -v '^?' && echo -n "*" ))"
-    else
-        local d=$(git rev-parse --git-dir 2>/dev/null ) b= r= a= c= e= f= g=
-        if [[ -n "${d}" ]] ; then
-            if [[ -d "${d}/../.dotest" ]] ; then
-                if [[ -f "${d}/../.dotest/rebase" ]] ; then
-                    r="rebase"
-                elif [[ -f "${d}/../.dotest/applying" ]] ; then
-                    r="am"
-                else
-                    r="???"
-                fi
-                b=$(git symbolic-ref HEAD 2>/dev/null )
-            elif [[ -f "${d}/.dotest-merge/interactive" ]] ; then
-                r="rebase-i"
-                b=$(<${d}/.dotest-merge/head-name)
-            elif [[ -d "${d}/../.dotest-merge" ]] ; then
-                r="rebase-m"
-                b=$(<${d}/.dotest-merge/head-name)
-            elif [[ -f "${d}/MERGE_HEAD" ]] ; then
-                r="merge"
-                b=$(git symbolic-ref HEAD 2>/dev/null )
-            elif [[ -f "${d}/BISECT_LOG" ]] ; then
-                r="bisect"
-                b=$(git symbolic-ref HEAD 2>/dev/null )"???"
-            else
-                r=""
-                b=$(git symbolic-ref HEAD 2>/dev/null )
-            fi
-
-            if git status | grep -q '^# Changes not staged' ; then
-                a="${a}*"
-            fi
-
-            if git status | grep -q '^# Changes to be committed:' ; then
-                a="${a}+"
-            fi
-
-            if git status | grep -q '^# Untracked files:' ; then
-                a="${a}?"
-            fi
-
-            e=$(git status | sed -n -e '/^# Your branch is /s/^.*\(ahead\|behind\).* by \(.*\) commit.*/\1 \2/p' )
-            if [[ -n ${e} ]] ; then
-                f=${e#* }
-                g=${e% *}
-                if [[ ${g} == "ahead" ]] ; then
-                    e="+${f}"
-                else
-                    e="-${f}"
-                fi
-            else
-                e=
-            fi
-
-            b=${b#refs/heads/}
-            b=${b// }
-            [[ -n "${b}" ]] && c="$(git config "branch.${b}.remote" 2>/dev/null )"
-            [[ -n "${r}${b}${c}${a}" ]] && s="(${r:+${r}:}${b}${c:+@${c}}${e}${a:+ ${a}})"
-        fi
-    fi
-    s="${s}${ACTIVE_COMPILER}"
-    s="${s:+${s} }"
-    echo -n "$s"
-}
-
 PROMPT_COMMAND="export prompt_exit_status=\$? ; $PROMPT_COMMAND"
 ps_usr="\[${bashrc_colour_usr}\]\u@"
 ps_hst="\[${bashrc_colour_hst}\]\h "
@@ -399,18 +329,6 @@ ps_job="\[${bashrc_colour_job}\]\$(ps_job_f)"
 ps_lda="\[${bashrc_colour_lda}\]\$(ps_lda_f)"
 ps_dir="\[${bashrc_colour_dir}\]\$(ps_dir_f)"
 ps_scr="\[${bashrc_colour_scr}\]\$(ps_scr_f)"
-case "${HOSTNAME:-$(hostname )}" in
-    snowstorm)
-        ;;
-    snow*)
-        ps_scm="\[${bashrc_colour_scm}\]\$(ps_scm_f)"
-        ;;
-    padang)
-        ps_scm="\[${bashrc_colour_scm}\]\$(ps_scm_f)"
-        ;;
-    *)
-        ;;
-esac
 export PS1="${ps_sav}${ps_usr}${ps_hst}${ps_cwd}${ps_ret}${ps_lda}${ps_job}${ps_dir}${ps_scr}${ps_scm}"
 export PS1="${PS1}${ps_mrk}${ps_end}"
 # }}}
