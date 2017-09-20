@@ -118,8 +118,10 @@ set virtualedit=block,onemore
 
 " Set our fonts
 if has("gui_gtk")
-    if hostname() == "snowblower" || hostname() == "snowflex" || hostname() == "snowtea"
-        set guifont=Source\ Code\ Pro\ Light\ 18
+    if hostname() == "snowblower" || hostname() == "snowflex"
+        set guifont=Source\ Code\ Pro\ Light\ 16
+    elseif hostname() == "snowtea"
+        set guifont=Source\ Code\ Pro\ Light\ 20
     elseif hostname() == "padang"
         set guifont=Source\ Code\ Pro\ Medium\ 14
     else
